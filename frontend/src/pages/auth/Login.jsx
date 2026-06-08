@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import axios from 'axios';
+import api from '../../utils/api';
 import { setStoredToken } from '../../utils/tokenStorage';
 
 export default function Login() {
@@ -12,7 +12,7 @@ export default function Login() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post('/api/auth/login', { email, password });
+      const res = await api.post('/auth/login', { email, password });
       setStoredToken(res.data.token);
       navigate(res.data.userType === 'CLIENT' ? '/client' : '/professional');
     } catch (err) {
