@@ -1,7 +1,11 @@
 import axios from 'axios';
 import { getStoredToken, clearToken } from './tokenStorage';
 
-const API_BASE_URL = import.meta.env.VITE_API_URL || 'https://calendar-scheduler-production.up.railway.app/api';
+// Production: Railway backend
+// Local dev: Vite proxy (configured in vite.config.js)
+const API_BASE_URL = typeof window !== 'undefined' && window.location.hostname === 'localhost'
+  ? '/api'
+  : 'https://calendar-scheduler-production.up.railway.app/api';
 
 const api = axios.create({
   baseURL: API_BASE_URL,
