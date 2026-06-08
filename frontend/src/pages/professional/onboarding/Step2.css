@@ -1,0 +1,6 @@
+/* Step 2 - Services */
+/* Uses OnboardingWizard.css base styles + these step-specific overrides */
+
+.step-2 .services-list {
+  margin-bottom: 20px;
+}

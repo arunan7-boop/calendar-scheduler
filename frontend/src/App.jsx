@@ -7,6 +7,8 @@ import Login from './pages/auth/Login';
 import Register from './pages/auth/Register';
 import ClientDashboard from './pages/client/Dashboard';
 import ProfessionalDashboard from './pages/professional/Dashboard';
+import CreateOrganization from './pages/professional/CreateOrganization';
+import OnboardingWizard from './pages/professional/onboarding/OnboardingWizard';
 
 function App() {
   const { user, isLoading } = useAuth();
@@ -20,6 +22,25 @@ function App() {
       <Routes>
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
+        <Route path="/join" element={<OnboardingWizard />} />
+        
+        <Route
+          path="/org/create"
+          element={
+            <ProtectedRoute userType="PROFESSIONAL">
+              <CreateOrganization />
+            </ProtectedRoute>
+          }
+        />
+        
+        <Route
+          path="/professional/onboard"
+          element={
+            <ProtectedRoute userType="PROFESSIONAL">
+              <OnboardingWizard />
+            </ProtectedRoute>
+          }
+        />
         
         <Route
           path="/client/*"

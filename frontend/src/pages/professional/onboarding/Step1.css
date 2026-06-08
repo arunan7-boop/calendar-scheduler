@@ -1,0 +1,6 @@
+/* Step 1 - Basic Information */
+/* Uses OnboardingWizard.css base styles + these step-specific overrides */
+
+.step-1 .onboarding-form {
+  max-width: 600px;
+}

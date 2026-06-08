@@ -14,14 +14,20 @@ export default function Register() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await api.post('/auth/register', {
+      const response = await api.post('/auth/register', {
         email,
         password,
         userType,
         firstName,
         lastName
       });
-      navigate('/login');
+      
+      // Professionals go to org creation, clients go to login
+      if (userType === 'PROFESSIONAL') {
+        navigate('/org/create');
+      } else {
+        navigate('/login');
+      }
     } catch (err) {
       setError(err.response?.data?.error || 'Registration failed');
     }

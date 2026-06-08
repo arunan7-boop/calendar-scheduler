@@ -1,0 +1,6 @@
+/* Step 4 - Images and Logo */
+/* Uses OnboardingWizard.css base styles + these step-specific overrides */
+
+.step-4 .media-section {
+  margin-bottom: 30px;
+}

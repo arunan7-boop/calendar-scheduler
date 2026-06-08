@@ -1,0 +1,6 @@
+/* Step 3 - Working Hours */
+/* Uses OnboardingWizard.css base styles + these step-specific overrides */
+
+.step-3 .working-hours-container {
+  margin-bottom: 20px;
+}
