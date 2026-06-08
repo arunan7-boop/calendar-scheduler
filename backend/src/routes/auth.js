@@ -2,8 +2,11 @@ const express = require('express');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const pool = require('../db/pool');
+const { verifyToken } = require('../middleware/auth');
 
 const router = express.Router();
+
+const JWT_SECRET = process.env.JWT_SECRET || 'dev-secret';
 
 // Register
 router.post('/register', async (req, res) => {
@@ -59,7 +62,7 @@ router.post('/login', async (req, res) => {
       return res.status(400).json({ error: 'Email and password required' });
     }
 
-    const result = await pool.query('SELECT id, password_hash, user_type FROM users WHERE email = $1', [email]);
+    const result = await pool.query('SELECT id, password_hash, user_type, email FROM users WHERE email = $1', [email]);
     if (result.rows.length === 0) {
       return res.status(401).json({ error: 'Invalid credentials' });
     }
@@ -72,15 +75,46 @@ router.post('/login', async (req, res) => {
     }
 
     const token = jwt.sign(
-      { userId: user.id, userType: user.user_type, email },
-      process.env.JWT_SECRET || 'dev-secret',
+      { userId: user.id, userType: user.user_type, email: user.email },
+      JWT_SECRET,
       { expiresIn: '24h' }
     );
 
-    res.json({ token, userId: user.id, userType: user.user_type });
+    res.json({ token, userId: user.id, userType: user.user_type, email: user.email });
   } catch (err) {
     console.error(err);
     res.status(500).json({ error: 'Login failed' });
+  }
+});
+
+// Refresh token
+router.post('/refresh', verifyToken, async (req, res) => {
+  try {
+    const newToken = jwt.sign(
+      { userId: req.user.userId, userType: req.user.userType, email: req.user.email },
+      JWT_SECRET,
+      { expiresIn: '24h' }
+    );
+
+    res.json({ token: newToken });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: 'Token refresh failed' });
+  }
+});
+
+// Get current user
+router.get('/me', verifyToken, async (req, res) => {
+  try {
+    const result = await pool.query('SELECT id, email, user_type FROM users WHERE id = $1', [req.user.userId]);
+    if (result.rows.length === 0) {
+      return res.status(404).json({ error: 'User not found' });
+    }
+
+    res.json(result.rows[0]);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: 'Failed to fetch user' });
   }
 });
 
