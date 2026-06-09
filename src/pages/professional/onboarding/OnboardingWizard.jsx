@@ -151,21 +151,33 @@ export default function OnboardingWizard() {
   const stepData = progress[`step_${currentStep}_data`] || null;
 
   return (
-    <div className="onboarding-wizard" style={{ fontFamily: theme.fonts.family }}>
+    <div className="onboarding-wizard">
       <style>{generateThemeCSS(theme)}</style>
 
       <div className="wizard-container">
         <div className="wizard-header">
-          <h1>Professional Profile Setup</h1>
+          <div className="wizard-badge">
+            <div className="badge-icon">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+                <circle cx="12" cy="7" r="4" />
+              </svg>
+            </div>
+            <span>Onboarding: Setup Profile</span>
+          </div>
           <div className="progress-indicator">
-            {[1, 2, 3, 4].map(step => (
-              <div
-                key={step}
-                className={`progress-step ${step === currentStep ? 'active' : ''} ${step < currentStep ? 'completed' : ''}`}
-              >
-                <span>{step}</span>
-              </div>
-            ))}
+            {[1, 2, 3, 4].map(step => {
+              const labels = ['Active', 'Work', 'Expertise', 'Finalize'];
+              return (
+                <div
+                  key={step}
+                  className={`progress-step ${step === currentStep ? 'active' : ''} ${step < currentStep ? 'completed' : ''}`}
+                >
+                  <span className="step-number">{step}</span>
+                  <span className="step-label">{labels[step - 1]}</span>
+                </div>
+              );
+            })}
           </div>
         </div>
 
