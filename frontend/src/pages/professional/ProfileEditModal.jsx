@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import api from '../../utils/api';
 import './ProfileEditModal.css';
 
+// Build: 2026-06-09 02:48 UTC - Forced rebuild
+
 const SELF_CARE_SERVICES = [
   'Massage Therapy', 'Yoga', 'Meditation', 'Facials', 'Hair Services',
   'Nail Care', 'Spa Treatments', 'Aromatherapy', 'Counseling', 'Coaching',
