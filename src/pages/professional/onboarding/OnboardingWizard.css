@@ -4,17 +4,23 @@
   min-height: 100vh;
   background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-secondary) 100%);
   padding: 40px 20px;
-  font-family: var(--font-family, 'system-ui');
+  font-family: var(--font-family, 'Roboto', sans-serif);
+}
+
+.onboarding-wizard * {
+  font-family: inherit;
 }
 
 .wizard-container {
   max-width: 800px;
   margin: 0 auto;
-  background: white;
-  border-radius: 28px;
-  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.08);
+  background: rgba(255, 255, 255, 0.72);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  backdrop-filter: blur(20px) saturate(180%);
+  border-radius: 36px;
+  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.5);
   overflow: hidden;
-  border: 1px solid var(--color-border);
+  border: 1px solid rgba(255, 255, 255, 0.3);
 }
 
 .wizard-header {
@@ -26,6 +32,7 @@
 
 .wizard-header h1 {
   margin: 0 0 30px;
+  font-family: var(--font-family, 'Roboto', sans-serif);
   font-size: 32px;
   font-weight: 700;
   letter-spacing: -0.025em;
