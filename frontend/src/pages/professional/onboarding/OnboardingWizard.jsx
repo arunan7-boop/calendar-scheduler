@@ -13,6 +13,7 @@ export default function OnboardingWizard() {
   const navigate = useNavigate();
   
   const token = searchParams.get('token');
+  const org_id_param = searchParams.get('org_id');
   const [organizationId, setOrganizationId] = useState(null);
   const [theme, setTheme] = useState(getTheme('default'));
   const [currentStep, setCurrentStep] = useState(1);
@@ -21,35 +22,41 @@ export default function OnboardingWizard() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
 
-  // Initialize wizard - verify token and load org
+  // Initialize wizard - verify token OR load org directly
   useEffect(() => {
     const initWizard = async () => {
       try {
-        if (!token) {
-          setError('Invalid or missing invite token');
+        let orgId = org_id_param; // Direct onboarding (already authenticated)
+
+        // If invite token, verify it first
+        if (token) {
+          // Determine API URL (same logic as api.js)
+          const isLocal = typeof window !== 'undefined' && window.location.hostname === 'localhost';
+          const apiBase = isLocal 
+            ? '/api'
+            : 'https://calendar-scheduler-production.up.railway.app/api';
+
+          // Verify token
+          const response = await fetch(`${apiBase}/organizations/invite/verify`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ token })
+          });
+
+          if (!response.ok) {
+            throw new Error('Invalid or expired invite token');
+          }
+
+          const data = await response.json();
+          orgId = data.organization.id;
+        }
+
+        if (!orgId) {
+          setError('No organization specified. Invalid or missing invite token.');
           setLoading(false);
           return;
         }
 
-        // Determine API URL (same logic as api.js)
-        const isLocal = typeof window !== 'undefined' && window.location.hostname === 'localhost';
-        const apiBase = isLocal 
-          ? '/api'
-          : 'https://calendar-scheduler-production.up.railway.app/api';
-
-        // Verify token
-        const response = await fetch(`${apiBase}/organizations/invite/verify`, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ token })
-        });
-
-        if (!response.ok) {
-          throw new Error('Invalid or expired invite token');
-        }
-
-        const data = await response.json();
-        const orgId = data.organization.id;
         setOrganizationId(orgId);
 
         // Load organization theme
@@ -60,7 +67,8 @@ export default function OnboardingWizard() {
         const me = await api.get('/auth/me');
         setProfessional({
           userId: me.data.id,
-          user_type: me.data.user_type
+          user_type: me.data.user_type,
+          professional_id: me.data.professional_id
         });
 
         // Get onboarding progress
@@ -76,7 +84,7 @@ export default function OnboardingWizard() {
     };
 
     initWizard();
-  }, [token]);
+  }, [token, org_id_param]);
 
   const handleSaveStep = async (step, data) => {
     try {

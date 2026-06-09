@@ -124,7 +124,17 @@ router.get('/me', verifyToken, async (req, res) => {
       return res.status(404).json({ error: 'User not found' });
     }
 
-    res.json(result.rows[0]);
+    const user = result.rows[0];
+    
+    // For professionals, also fetch professional_id
+    if (user.user_type === 'PROFESSIONAL') {
+      const proResult = await pool.query('SELECT id FROM professional_profiles WHERE user_id = $1', [user.id]);
+      if (proResult.rows.length > 0) {
+        user.professional_id = proResult.rows[0].id;
+      }
+    }
+
+    res.json(user);
   } catch (err) {
     console.error(err);
     res.status(500).json({ error: 'Failed to fetch user' });
