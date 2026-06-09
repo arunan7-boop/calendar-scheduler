@@ -1,9 +1,6 @@
 name = "calandr"
-type = "javascript"
+pages_build_output_dir = "dist"
 
 [build]
-command = "npm install && npm run build"
+command = "npm run build"
 cwd = "."
-
-[build.upload]
-dir = "dist"
