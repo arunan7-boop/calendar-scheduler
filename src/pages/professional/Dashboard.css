@@ -158,16 +158,29 @@
 }
 
 .tab-content {
-  display: flex;
-  flex-direction: column;
-  gap: 30px;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 24px;
+}
+
+@media (max-width: 900px) {
+  .tab-content {
+    grid-template-columns: 1fr;
+  }
 }
 
 .content-section {
-  padding: 24px;
-  background: #f9fafb;
-  border-radius: 20px;
+  padding: 32px;
+  background: white;
+  border-radius: 28px;
   border: 1px solid #e5e7eb;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.02);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.content-section:hover {
+  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.06);
+  transform: translateY(-2px);
 }
 
 .section-header {
