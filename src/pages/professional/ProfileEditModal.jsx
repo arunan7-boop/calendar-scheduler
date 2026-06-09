@@ -222,33 +222,33 @@ export default function ProfileEditModal({ orgId, onClose, onSave }) {
     }
   };
 
-  const handlePhotoUpload = (e) => {
-    const files = Array.from(e.target.files);
-    const remaining = 3 - variantForm.photos.length;
-
-    if (files.length > remaining) {
-      setError(`You can add max ${remaining} more photo(s) per variant`);
-      return;
-    }
+  const handleSinglePhotoUpload = (e, index) => {
+    const file = e.target.files[0];
+    if (!file) return;
 
     setError('');
-    files.forEach(file => {
-      const reader = new FileReader();
-      reader.onload = (event) => {
-        setVariantForm(prev => ({
+    const reader = new FileReader();
+    reader.onload = (event) => {
+      setVariantForm(prev => {
+        const updatedPhotos = [...prev.photos];
+        updatedPhotos[index] = event.target.result;
+        return {
           ...prev,
-          photos: [...prev.photos, event.target.result]
-        }));
-      };
-      reader.readAsDataURL(file);
-    });
+          photos: updatedPhotos
+        };
+      });
+    };
+    reader.readAsDataURL(file);
   };
 
   const handleRemovePhoto = (index) => {
-    setVariantForm(prev => ({
-      ...prev,
-      photos: prev.photos.filter((_, i) => i !== index)
-    }));
+    setVariantForm(prev => {
+      const updatedPhotos = [...prev.photos];
+      return {
+        ...prev,
+        photos: updatedPhotos.filter((_, i) => i !== index)
+      };
+    });
   };
 
   const resetVariantForm = () => {
@@ -420,29 +420,43 @@ export default function ProfileEditModal({ orgId, onClose, onSave }) {
 
                               <div className="form-group">
                                 <label>Photos (up to 3)</label>
-                                <input
-                                  type="file"
-                                  multiple
-                                  accept="image/*"
-                                  onChange={handlePhotoUpload}
-                                  disabled={loading || variantForm.photos.length >= 3}
-                                />
-                                {variantForm.photos.length > 0 && (
-                                  <div className="photo-preview">
-                                    {variantForm.photos.map((photo, idx) => (
-                                      <div key={idx} className="photo-item">
-                                        <img src={photo} alt={`Preview ${idx + 1}`} />
-                                        <button
-                                          type="button"
-                                          onClick={() => handleRemovePhoto(idx)}
-                                          className="photo-remove"
-                                        >
-                                          ×
-                                        </button>
+                                <div className="variant-photo-slots">
+                                  {[0, 1, 2].map((idx) => {
+                                    const photo = variantForm.photos[idx];
+                                    return (
+                                      <div key={idx} className="variant-photo-slot">
+                                        {photo ? (
+                                          <div className="photo-preview-item">
+                                            <img src={photo} alt={`Preview ${idx + 1}`} />
+                                            <button
+                                              type="button"
+                                              onClick={() => handleRemovePhoto(idx)}
+                                              className="photo-remove"
+                                            >
+                                              ×
+                                            </button>
+                                          </div>
+                                        ) : (
+                                          <div 
+                                            className="photo-upload-trigger" 
+                                            onClick={() => document.getElementById(`variant-photo-input-${idx}`).click()}
+                                          >
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="upload-icon"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" x2="12" y1="3" y2="15"/></svg>
+                                            <span>Upload</span>
+                                            <input
+                                              type="file"
+                                              id={`variant-photo-input-${idx}`}
+                                              style={{ display: 'none' }}
+                                              accept="image/*"
+                                              onChange={(e) => handleSinglePhotoUpload(e, idx)}
+                                              disabled={loading}
+                                            />
+                                          </div>
+                                        )}
                                       </div>
-                                    ))}
-                                  </div>
-                                )}
+                                    );
+                                  })}
+                                </div>
                               </div>
                             </div>
 
