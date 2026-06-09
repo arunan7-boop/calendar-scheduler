@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import api from '../../utils/api';
-import { storeToken } from '../../utils/tokenStorage';
+import { setStoredToken } from '../../utils/tokenStorage';
 
 export default function Register() {
   const [userType, setUserType] = useState('CLIENT');
@@ -25,7 +25,7 @@ export default function Register() {
       
       // Save JWT token
       if (response.data.token) {
-        storeToken(response.data.token);
+        setStoredToken(response.data.token);
       }
       
       // Professionals go to org creation, clients go to dashboard
