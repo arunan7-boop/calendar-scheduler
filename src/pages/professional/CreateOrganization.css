@@ -9,18 +9,20 @@
 
 .create-org-card {
   background: white;
-  border-radius: 12px;
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+  border-radius: 28px;
+  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.08);
   max-width: 600px;
   width: 100%;
   padding: 40px;
+  border: 1px solid #e5e7eb;
 }
 
 .create-org-card h1 {
   margin: 0 0 10px;
-  font-size: 28px;
+  font-size: 32px;
   color: #1f2937;
   font-weight: 700;
+  letter-spacing: -0.025em;
 }
 
 .intro-text {
@@ -48,18 +50,20 @@
 }
 
 .form-group input[type="text"] {
-  padding: 12px;
+  padding: 14px 16px;
   border: 1px solid #e5e7eb;
-  border-radius: 6px;
+  border-radius: 16px;
   font-size: 14px;
-  transition: border-color 0.2s;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
   font-family: inherit;
+  background: #f9fafb;
 }
 
 .form-group input[type="text"]:focus {
   outline: none;
   border-color: #6366f1;
-  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+  background: white;
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.15);
 }
 
 .form-group small {
@@ -89,66 +93,56 @@
 }
 
 .theme-preview {
-  padding: 15px;
-  border: 2px solid #e5e7eb;
-  border-radius: 8px;
+  padding: 16px;
+  border: 1px solid #e5e7eb;
+  border-radius: 16px;
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 8px;
-  transition: all 0.2s;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
   text-align: center;
 }
 
 .theme-option input:checked ~ .theme-preview {
   border-color: currentColor;
-  background: rgba(99, 102, 241, 0.05);
+  background: rgba(99, 102, 241, 0.04);
   transform: scale(1.05);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.04);
 }
 
 .theme-color {
   width: 40px;
   height: 40px;
-  border-radius: 6px;
+  border-radius: 12px;
 }
 
 .theme-preview span {
   font-size: 12px;
-  font-weight: 500;
+  font-weight: 600;
   color: #1f2937;
 }
 
 .error-message {
-  background: #fee;
-  color: #c00;
-  padding: 12px;
-  border-radius: 6px;
+  background: #fef2f2;
+  color: #991b1b;
+  border: 1px solid #fee2e2;
+  padding: 14px;
+  border-radius: 16px;
   font-size: 14px;
 }
 
+/* Button overrides removed; using global index.css styled buttons */
 .btn-large {
-  padding: 14px 24px;
+  width: 100%;
+  padding: 16px 28px;
   font-size: 16px;
-  font-weight: 600;
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
-  transition: all 0.2s;
-}
-
-.btn-primary {
-  background: #6366f1;
-  color: white;
-}
-
-.btn-primary:hover:not(:disabled) {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 20px rgba(99, 102, 241, 0.3);
-}
-
-.btn-primary:disabled {
-  opacity: 0.6;
-  cursor: not-allowed;
+  font-weight: 700;
+  border-radius: 9999px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .form-hint {

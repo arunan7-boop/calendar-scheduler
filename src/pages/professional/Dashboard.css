@@ -67,10 +67,10 @@
 
 .org-selector {
   background: white;
-  border-radius: 8px;
-  padding: 20px;
+  border-radius: 24px;
+  padding: 24px;
   height: fit-content;
-  sticky: top 80px;
+  border: 1px solid #e5e7eb;
 }
 
 .org-selector h2 {
@@ -88,24 +88,25 @@
 }
 
 .org-item {
-  padding: 12px;
+  padding: 16px;
   border: 1px solid #e5e7eb;
-  border-radius: 6px;
+  border-radius: 16px;
   background: white;
   text-align: left;
   cursor: pointer;
-  transition: all 0.2s;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .org-item:hover {
   border-color: #6366f1;
-  background: #f0f1ff;
+  background: rgba(99, 102, 241, 0.04);
 }
 
 .org-item.active {
   border-color: #6366f1;
   background: #6366f1;
   color: white;
+  box-shadow: 0 4px 12px rgba(99, 102, 241, 0.2);
 }
 
 .org-name {
@@ -123,8 +124,9 @@
 
 .dashboard-content {
   background: white;
-  border-radius: 8px;
-  padding: 30px;
+  border-radius: 24px;
+  padding: 32px;
+  border: 1px solid #e5e7eb;
 }
 
 .org-header {
@@ -162,9 +164,9 @@
 }
 
 .content-section {
-  padding: 20px;
+  padding: 24px;
   background: #f9fafb;
-  border-radius: 6px;
+  border-radius: 20px;
   border: 1px solid #e5e7eb;
 }
 
@@ -264,43 +266,7 @@
   margin-bottom: 15px;
 }
 
-/* Buttons */
-
-.btn {
-  padding: 10px 16px;
-  border: 1px solid #d1d5db;
-  border-radius: 6px;
-  background: white;
-  color: #1f2937;
-  font-weight: 500;
-  font-size: 14px;
-  cursor: pointer;
-  transition: all 0.2s;
-}
-
-.btn-primary {
-  background: #6366f1;
-  color: white;
-  border-color: #6366f1;
-}
-
-.btn-primary:hover {
-  background: #4f46e5;
-}
-
-.btn-secondary {
-  background: white;
-  border-color: #d1d5db;
-}
-
-.btn-secondary:hover {
-  background: #f9fafb;
-}
-
-.btn-small {
-  padding: 8px 12px;
-  font-size: 13px;
-}
+/* Buttons styled in index.css */
 
 /* Empty State */
 
@@ -342,11 +308,12 @@
 
 .modal-content {
   background: white;
-  border-radius: 8px;
-  padding: 30px;
+  border-radius: 28px;
+  padding: 32px;
   max-width: 500px;
   width: 90%;
-  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 12px 48px rgba(0, 0, 0, 0.12);
+  border: 1px solid #e5e7eb;
 }
 
 .modal-content h3 {

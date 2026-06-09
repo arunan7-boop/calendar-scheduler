@@ -2,7 +2,8 @@
   max-width: 700px;
   display: flex;
   flex-direction: column;
-  max-height: 90vh;
+  max-height: 100vh;
+  border-radius: 28px;
 }
 
 .modal-header {
@@ -68,7 +69,7 @@
 
 .service-card {
   border: 1px solid #e5e7eb;
-  border-radius: 8px;
+  border-radius: 20px;
   overflow: hidden;
   background: #f9fafb;
 }
@@ -96,12 +97,12 @@
 }
 
 .btn-expand {
-  padding: 6px 12px;
+  padding: 6px 14px;
   background: white;
   border: 1px solid #d1d5db;
-  border-radius: 4px;
+  border-radius: 9999px;
   font-size: 12px;
-  font-weight: 500;
+  font-weight: 600;
   cursor: pointer;
   transition: all 0.2s;
   color: #6b7280;
@@ -113,20 +114,19 @@
 }
 
 .btn-remove-service {
-  padding: 6px 12px;
-  background: #fee;
-  color: #c00;
-  border: 1px solid #fcc;
-  border-radius: 4px;
+  padding: 6px 14px;
+  background: #fef2f2;
+  color: #991b1b;
+  border: 1px solid #fee2e2;
+  border-radius: 9999px;
   font-size: 12px;
-  font-weight: 500;
+  font-weight: 600;
   cursor: pointer;
   transition: all 0.2s;
 }
 
 .btn-remove-service:hover:not(:disabled) {
-  background: #fdd;
-  border-color: #faa;
+  background: #fee2e2;
 }
 
 .btn-remove-service:disabled {
@@ -151,10 +151,10 @@
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-  padding: 12px;
+  padding: 16px;
   background: white;
   border: 1px solid #e5e7eb;
-  border-radius: 6px;
+  border-radius: 16px;
   gap: 12px;
 }
 
@@ -245,10 +245,10 @@
 }
 
 .add-variant-form {
-  padding: 15px;
+  padding: 20px;
   background: white;
-  border: 1px solid #d1d5db;
-  border-radius: 6px;
+  border: 1px solid #e5e7eb;
+  border-radius: 20px;
 }
 
 .add-variant-form h6 {
@@ -274,9 +274,9 @@
 .form-group input,
 .form-group textarea,
 .form-group select {
-  padding: 8px;
+  padding: 12px 14px;
   border: 1px solid #e5e7eb;
-  border-radius: 6px;
+  border-radius: 12px;
   font-size: 13px;
   font-family: inherit;
 }

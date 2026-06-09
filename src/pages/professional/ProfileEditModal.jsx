@@ -182,6 +182,8 @@ export default function ProfileEditModal({ onClose, onSave }) {
       setLoading(false);
     }
   };
+
+  const handlePhotoUpload = (e) => {
     const files = Array.from(e.target.files);
     const remaining = 3 - variantForm.photos.length;
 
