@@ -47,7 +47,12 @@ export default function ProfessionalDashboard() {
       const response = await api.get('/organizations/my-organizations');
       setOrganizations(response.data);
       if (response.data.length > 0) {
-        setSelectedOrg(response.data[0].id);
+        setSelectedOrg(prev => {
+          if (prev && response.data.some(o => o.id === prev)) {
+            return prev;
+          }
+          return response.data[0].id;
+        });
       }
 
       // Fetch professional profile to get services list
@@ -371,7 +376,7 @@ export default function ProfessionalDashboard() {
                               {svc.variants.map(v => (
                                 <div key={v.id} className="summary-variant-item">
                                   <div className="v-label">{v.name}</div>
-                                  <div className="v-price">{currencySymbol}{v.price?.toFixed(2)} / {v.duration} min</div>
+                                  <div className="v-price">{currencySymbol}{typeof v.price === 'number' ? v.price.toFixed(2) : parseFloat(v.price || 0).toFixed(2)} / {v.duration} min</div>
                                 </div>
                               ))}
                             </div>
