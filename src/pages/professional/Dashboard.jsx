@@ -332,6 +332,7 @@ export default function ProfessionalDashboard() {
       {/* Edit Profile Modal */}
       {showProfileEditModal && (
         <ProfileEditModal 
+          orgId={selectedOrg}
           onClose={() => setShowProfileEditModal(false)}
           onSave={() => setShowProfileEditModal(false)}
         />

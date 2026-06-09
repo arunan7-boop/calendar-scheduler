@@ -40,44 +40,101 @@ export default function Register() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-50">
-      <div className="card w-full max-w-md">
-        <h1 className="text-2xl font-bold mb-6">Create Account</h1>
-        {error && <div className="mb-4 p-3 bg-red-100 text-red-700 rounded">{error}</div>}
-        <form onSubmit={handleSubmit} className="space-y-4">
-          <div>
-            <label className="block text-sm font-medium mb-1">I am a...</label>
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500 p-4">
+      <div className="bg-white rounded-[32px] shadow-xl p-8 md:p-10 w-full max-w-md border border-white/20">
+        <h1 className="text-4xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-purple-600 mb-2 tracking-tight text-center">
+          Create Account
+        </h1>
+        <p className="text-gray-500 text-center text-sm mb-8 font-medium">
+          Join Calandr appointment network today
+        </p>
+
+        {error && (
+          <div className="mb-6 p-4 bg-red-50 text-red-700 rounded-2xl border border-red-100 text-sm font-medium">
+            {error}
+          </div>
+        )}
+
+        <form onSubmit={handleSubmit} className="space-y-5">
+          <div className="form-group">
+            <label className="block text-sm font-semibold text-gray-700 mb-1.5 tracking-wide">
+              I am registering as a...
+            </label>
             <select
-              className="input"
+              className="input md3-input w-full"
               value={userType}
               onChange={(e) => setUserType(e.target.value)}
             >
-              <option value="CLIENT">Client</option>
-              <option value="PROFESSIONAL">Professional</option>
+              <option value="CLIENT">Client (Looking to Book)</option>
+              <option value="PROFESSIONAL">Professional (Service Provider)</option>
             </select>
           </div>
-          <div className="grid grid-cols-2 gap-2">
-            <div>
-              <label className="block text-sm font-medium mb-1">First Name</label>
-              <input type="text" className="input" value={firstName} onChange={(e) => setFirstName(e.target.value)} />
+
+          <div className="grid grid-cols-2 gap-3">
+            <div className="form-group">
+              <label className="block text-sm font-semibold text-gray-700 mb-1.5 tracking-wide">
+                First Name
+              </label>
+              <input
+                type="text"
+                className="input md3-input"
+                placeholder="Jane"
+                value={firstName}
+                onChange={(e) => setFirstName(e.target.value)}
+              />
             </div>
-            <div>
-              <label className="block text-sm font-medium mb-1">Last Name</label>
-              <input type="text" className="input" value={lastName} onChange={(e) => setLastName(e.target.value)} />
+            <div className="form-group">
+              <label className="block text-sm font-semibold text-gray-700 mb-1.5 tracking-wide">
+                Last Name
+              </label>
+              <input
+                type="text"
+                className="input md3-input"
+                placeholder="Doe"
+                value={lastName}
+                onChange={(e) => setLastName(e.target.value)}
+              />
             </div>
           </div>
-          <div>
-            <label className="block text-sm font-medium mb-1">Email</label>
-            <input type="email" className="input" value={email} onChange={(e) => setEmail(e.target.value)} required />
+
+          <div className="form-group">
+            <label className="block text-sm font-semibold text-gray-700 mb-1.5 tracking-wide">
+              Email Address
+            </label>
+            <input
+              type="email"
+              className="input md3-input"
+              placeholder="jane.doe@example.com"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+            />
           </div>
-          <div>
-            <label className="block text-sm font-medium mb-1">Password</label>
-            <input type="password" className="input" value={password} onChange={(e) => setPassword(e.target.value)} required />
+
+          <div className="form-group">
+            <label className="block text-sm font-semibold text-gray-700 mb-1.5 tracking-wide">
+              Password
+            </label>
+            <input
+              type="password"
+              className="input md3-input"
+              placeholder="Min 6 characters"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+            />
           </div>
-          <button type="submit" className="btn btn-primary w-full">Create Account</button>
+
+          <button type="submit" className="w-full py-3.5 btn btn-primary text-base font-bold shadow-md hover:shadow-lg transition-all duration-200 rounded-full mt-4">
+            Create Account
+          </button>
         </form>
-        <p className="text-center text-sm mt-4">
-          Already have an account? <Link to="/login" className="text-indigo-600 hover:underline">Sign In</Link>
+
+        <p className="text-center text-sm text-gray-600 mt-8 font-medium">
+          Already have an account?{' '}
+          <Link to="/login" className="text-indigo-600 hover:text-indigo-800 hover:underline font-semibold transition-colors duration-200">
+            Sign In
+          </Link>
         </p>
       </div>
     </div>

@@ -13,8 +13,9 @@ const SELF_CARE_SERVICES = [
   'Beauty Treatments', 'Wellness Consultation'
 ];
 
-export default function ProfileEditModal({ onClose, onSave }) {
+export default function ProfileEditModal({ orgId, onClose, onSave }) {
   const [services, setServices] = useState([]);
+  const [allowedServices, setAllowedServices] = useState(SELF_CARE_SERVICES);
   const [selectedServiceName, setSelectedServiceName] = useState('');
   const [expandedService, setExpandedService] = useState(null);
   const [editingVariant, setEditingVariant] = useState(null);
@@ -40,6 +41,21 @@ export default function ProfileEditModal({ onClose, onSave }) {
       const response = await api.get('/professionals/profile');
       const existingServices = response.data.services || [];
       setServices(existingServices);
+
+      if (orgId && response.data.id) {
+        try {
+          const progressRes = await api.get(`/organizations/${orgId}/onboarding/${response.data.id}`);
+          if (progressRes.data && progressRes.data.step_2_data) {
+            const step2 = progressRes.data.step_2_data;
+            const checked = step2.all || step2.selected || [];
+            if (checked.length > 0) {
+              setAllowedServices(checked);
+            }
+          }
+        } catch (err) {
+          console.error('Failed to load onboarding services:', err);
+        }
+      }
     } catch (err) {
       console.error('Failed to load services:', err);
     }
@@ -224,7 +240,7 @@ export default function ProfileEditModal({ onClose, onSave }) {
   };
 
   const usedServices = services.map(s => s.name);
-  const availableServices = SELF_CARE_SERVICES.filter(s => !usedServices.includes(s));
+  const availableServices = allowedServices.filter(s => !usedServices.includes(s));
 
   return (
     <div className="modal-overlay" onClick={onClose}>
