@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { COPY } from '../../config/theme';
+import { COPY } from '../../../config/theme';
 import './Step1.css';
 
 export default function Step1({ data, onSave, onNext, onOrganizationSelect }) {

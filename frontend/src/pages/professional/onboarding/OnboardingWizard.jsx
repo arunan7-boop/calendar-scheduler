@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { useSearchParams, useNavigate } from 'react-router-dom';
-import { getTheme } from '../../config/theme';
+import { getTheme } from '../../../config/theme';
 import Step1 from './Step1';
 import Step2 from './Step2';
 import Step3 from './Step3';
 import Step4 from './Step4';
-import api from '../../utils/api';
+import api from '../../../utils/api';
 import './OnboardingWizard.css';
 
 export default function OnboardingWizard() {
@@ -31,8 +31,14 @@ export default function OnboardingWizard() {
           return;
         }
 
+        // Determine API URL (same logic as api.js)
+        const isLocal = typeof window !== 'undefined' && window.location.hostname === 'localhost';
+        const apiBase = isLocal 
+          ? '/api'
+          : 'https://calendar-scheduler-production.up.railway.app/api';
+
         // Verify token
-        const response = await fetch(`${import.meta.env.VITE_API_URL}/api/organizations/invite/verify`, {
+        const response = await fetch(`${apiBase}/organizations/invite/verify`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ token })

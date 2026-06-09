@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { COPY } from '../../config/theme';
+import { COPY } from '../../../config/theme';
 import './Step2.css';
 
 const SELF_CARE_SERVICES = [

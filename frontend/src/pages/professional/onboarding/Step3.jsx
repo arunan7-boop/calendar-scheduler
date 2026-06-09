@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { COPY } from '../../config/theme';
+import { COPY } from '../../../config/theme';
 import './Step3.css';
 
 const DAYS = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
