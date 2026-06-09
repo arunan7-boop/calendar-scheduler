@@ -54,6 +54,24 @@
   padding-right: 10px;
 }
 
+.modal-body::-webkit-scrollbar {
+  width: 6px;
+}
+
+.modal-body::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.02);
+  border-radius: 3px;
+}
+
+.modal-body::-webkit-scrollbar-thumb {
+  background: rgba(0, 240, 255, 0.3);
+  border-radius: 3px;
+}
+
+.modal-body::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 240, 255, 0.5);
+}
+
 .services-section {
   margin-bottom: 30px;
 }
@@ -103,16 +121,16 @@
 }
 
 .btn-expand-neon {
-  padding: 8px 16px;
+  padding: 8px 18px;
   background: rgba(16, 24, 48, 0.95);
-  border: 1.5px solid #00f0ff !important;
-  border-radius: 12px;
+  border: 2px solid #00f0ff !important;
+  border-radius: 14px;
   color: #ffffff;
   cursor: pointer;
   font-weight: 600;
-  font-size: 13px;
+  font-size: 13.5px;
   transition: all 0.2s;
-  box-shadow: 0 0 10px rgba(0, 240, 255, 0.3);
+  box-shadow: 0 0 10px rgba(0, 240, 255, 0.35);
   display: inline-flex;
   align-items: center;
   gap: 8px;
@@ -124,14 +142,14 @@
 }
 
 .btn-delete-svc-outline {
-  padding: 8px 16px;
+  padding: 8px 18px;
   background: transparent;
-  border: 1.5px solid rgba(255, 255, 255, 0.4) !important;
-  border-radius: 12px;
+  border: 2px solid rgba(255, 255, 255, 0.4) !important;
+  border-radius: 14px;
   color: #ffffff;
   cursor: pointer;
   font-weight: 600;
-  font-size: 13px;
+  font-size: 13.5px;
   transition: all 0.2s;
   display: inline-flex;
   align-items: center;
@@ -365,15 +383,15 @@
 .profile-edit-modal .form-group input,
 .profile-edit-modal .form-group textarea {
   padding: 12px 14px;
-  border: 1.5px solid #00f0ff !important;
-  border-radius: 12px !important;
+  border: 2px solid #00f0ff !important;
+  border-radius: 14px !important;
   font-size: 13.5px !important;
   font-family: inherit !important;
   background: rgba(16, 24, 48, 0.95) !important;
   color: #ffffff !important;
   transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
   width: 100% !important;
-  box-shadow: 0 0 10px rgba(0, 240, 255, 0.3) !important;
+  box-shadow: 0 0 10px rgba(0, 240, 255, 0.35) !important;
 }
 
 .profile-edit-modal .form-group select {
