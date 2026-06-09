@@ -351,9 +351,9 @@ export default function ProfileEditModal({ orgId, onClose, onSave }) {
                         <div className="add-variant-box">
                           <h6>Add Variant to {service.name}</h6>
                           
-                          <div className="variant-form-layout">
-                            {/* Left Column: Form Inputs */}
-                            <div className="variant-form-fields">
+                          <div className="variant-form-vertical">
+                            {/* Form Inputs (takes up 80% width) */}
+                            <div className="variant-form-fields-80">
                               <div className="form-group">
                                 <label>Variant Name *</label>
                                 <input
@@ -370,6 +370,7 @@ export default function ProfileEditModal({ orgId, onClose, onSave }) {
                                   <label>Price ({currentSymbol}) *</label>
                                   <input
                                     type="number"
+                                    className="price-input-no-spin"
                                     placeholder="0.00"
                                     value={variantForm.price}
                                     onChange={(e) => setVariantForm({...variantForm, price: e.target.value})}
@@ -379,16 +380,30 @@ export default function ProfileEditModal({ orgId, onClose, onSave }) {
                                   />
                                 </div>
                                 <div className="form-group">
-                                  <label>Duration (min)</label>
-                                  <input
-                                    type="number"
+                                  <label>Duration (minutes)</label>
+                                  <select
                                     value={variantForm.duration}
                                     onChange={(e) => setVariantForm({...variantForm, duration: parseInt(e.target.value)})}
-                                    min="15"
-                                    max="480"
-                                    step="15"
                                     disabled={loading}
-                                  />
+                                  >
+                                    <option value="15">15 mins</option>
+                                    <option value="30">30 mins</option>
+                                    <option value="45">45 mins</option>
+                                    <option value="60">60 mins (1 hr)</option>
+                                    <option value="75">75 mins</option>
+                                    <option value="90">90 mins (1.5 hrs)</option>
+                                    <option value="105">105 mins</option>
+                                    <option value="120">120 mins (2 hrs)</option>
+                                    <option value="135">135 mins</option>
+                                    <option value="150">150 mins (2.5 hrs)</option>
+                                    <option value="165">165 mins</option>
+                                    <option value="180">180 mins (3 hrs)</option>
+                                    <option value="240">240 mins (4 hrs)</option>
+                                    <option value="300">300 mins (5 hrs)</option>
+                                    <option value="360">360 mins (6 hrs)</option>
+                                    <option value="420">420 mins (7 hrs)</option>
+                                    <option value="480">480 mins (8 hrs)</option>
+                                  </select>
                                 </div>
                               </div>
 
@@ -398,7 +413,7 @@ export default function ProfileEditModal({ orgId, onClose, onSave }) {
                                   placeholder="Describe this variant..."
                                   value={variantForm.description}
                                   onChange={(e) => setVariantForm({...variantForm, description: e.target.value})}
-                                  rows="2"
+                                  rows="3"
                                   disabled={loading}
                                 />
                               </div>
@@ -431,17 +446,8 @@ export default function ProfileEditModal({ orgId, onClose, onSave }) {
                               </div>
                             </div>
 
-                            {/* Right Column: Actions side panel (centered vertically) */}
-                            <div className="variant-form-actions">
-                              <button
-                                type="button"
-                                className="btn btn-primary btn-add-variant"
-                                onClick={handleAddVariant}
-                                disabled={loading || !variantForm.name || !variantForm.price}
-                              >
-                                {loading ? 'Adding...' : 'Add Variant'}
-                              </button>
-                              
+                            {/* Actions aligned bottom-right */}
+                            <div className="variant-form-actions-bottom">
                               <button
                                 type="button"
                                 className="btn btn-secondary btn-delete-variant-form"
@@ -449,6 +455,14 @@ export default function ProfileEditModal({ orgId, onClose, onSave }) {
                                 disabled={loading}
                               >
                                 Delete Variant
+                              </button>
+                              <button
+                                type="button"
+                                className="btn btn-primary btn-add-variant"
+                                onClick={handleAddVariant}
+                                disabled={loading || !variantForm.name || !variantForm.price}
+                              >
+                                {loading ? 'Adding...' : 'Add Variant'}
                               </button>
                             </div>
                           </div>

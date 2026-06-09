@@ -379,6 +379,24 @@
   color: #d1d5db;
 }
 
+/* Hide number inputs spinners inside professional profile modal */
+.profile-edit-modal input[type=number]::-webkit-inner-spin-button,
+.profile-edit-modal input[type=number]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+.profile-edit-modal input[type=number] {
+  -moz-appearance: textfield;
+}
+
+/* Ensure all modal headers are high-contrast white */
+.profile-edit-modal h3,
+.profile-edit-modal h4,
+.profile-edit-modal h5,
+.profile-edit-modal h6 {
+  color: #ffffff !important;
+}
+
 /* Prevent Tailwind white background overrides and set neon cyan borders */
 .profile-edit-modal .form-group input,
 .profile-edit-modal .form-group textarea {
@@ -396,14 +414,25 @@
 
 .profile-edit-modal .form-group select {
   padding: 12px 14px;
-  border: 1px solid rgba(255, 255, 255, 0.12) !important;
-  border-radius: 12px !important;
+  border: 2px solid #00f0ff !important;
+  border-radius: 14px !important;
   font-size: 13.5px !important;
   font-family: inherit !important;
   background: rgba(16, 24, 48, 0.95) !important;
   color: #ffffff !important;
   transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
   width: 100% !important;
+  box-shadow: 0 0 10px rgba(0, 240, 255, 0.35) !important;
+  
+  /* Custom MD3 dropdown chevron arrow styled in cyan */
+  appearance: none !important;
+  -webkit-appearance: none !important;
+  -moz-appearance: none !important;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%2300f0ff' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'><polyline points='6 9 12 15 18 9'></polyline></svg>") !important;
+  background-repeat: no-repeat !important;
+  background-position: right 14px center !important;
+  background-size: 16px !important;
+  padding-right: 40px !important;
 }
 
 .profile-edit-modal .form-group select option {
@@ -412,42 +441,39 @@
 }
 
 .profile-edit-modal .form-group input:focus,
-.profile-edit-modal .form-group textarea:focus {
+.profile-edit-modal .form-group textarea:focus,
+.profile-edit-modal .form-group select:focus {
   outline: none !important;
   border-color: #00f0ff !important;
   box-shadow: 0 0 15px rgba(0, 240, 255, 0.6) !important;
 }
 
-.profile-edit-modal .form-group select:focus {
-  outline: none !important;
-  border-color: #38bdf8 !important;
-  box-shadow: 0 0 15px rgba(56, 189, 248, 0.4) !important;
-}
-
-/* Side-by-side flex layout for variant form fields and center-right CTAs */
-.variant-form-layout {
-  display: flex;
-  gap: 24px;
-  align-items: center;
-}
-
-.variant-form-fields {
-  flex: 1;
-}
-
-.variant-form-actions {
-  width: 200px;
+/* Stretched vertical layout with 80% inputs width and bottom aligned actions */
+.variant-form-vertical {
   display: flex;
   flex-direction: column;
-  gap: 12px;
-  align-self: center;
-  justify-content: center;
+  gap: 20px;
+  width: 100%;
 }
 
-.variant-form-actions button {
-  width: 100%;
-  padding: 12px;
-  border-radius: 12px;
+.variant-form-fields-80 {
+  width: 80%;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.variant-form-actions-bottom {
+  display: flex;
+  justify-content: flex-end;
+  gap: 16px;
+  width: 80%; /* Match inputs width */
+  margin-top: 10px;
+}
+
+.variant-form-actions-bottom button {
+  padding: 12px 24px;
+  border-radius: 14px;
   font-weight: 600;
   cursor: pointer;
   transition: all 0.2s;
