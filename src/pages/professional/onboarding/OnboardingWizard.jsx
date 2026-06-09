@@ -163,11 +163,11 @@ export default function OnboardingWizard() {
                 <circle cx="12" cy="7" r="4" />
               </svg>
             </div>
-            <span>Onboarding: Setup Profile</span>
+            <span>Company Onboarding</span>
           </div>
           <div className="progress-indicator">
             {[1, 2, 3, 4].map(step => {
-              const labels = ['Active', 'Work', 'Expertise', 'Finalize'];
+              const labels = ['Company Profile', 'Services', 'Working Hours', 'Visuals'];
               return (
                 <div
                   key={step}
