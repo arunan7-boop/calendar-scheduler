@@ -13,14 +13,22 @@ const SELF_CARE_SERVICES = [
 
 export default function ProfileEditModal({ onClose, onSave }) {
   const [services, setServices] = useState([]);
-  const [selectedService, setSelectedService] = useState('');
-  const [duration, setDuration] = useState(60);
-  const [price, setPrice] = useState('');
+  const [selectedServiceName, setSelectedServiceName] = useState('');
+  const [expandedService, setExpandedService] = useState(null);
+  const [editingVariant, setEditingVariant] = useState(null);
+  
+  const [variantForm, setVariantForm] = useState({
+    name: '',
+    price: '',
+    duration: 60,
+    description: '',
+    photos: []
+  });
+  
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
 
-  // Load existing services on mount
   useEffect(() => {
     loadServices();
   }, []);
@@ -35,9 +43,33 @@ export default function ProfileEditModal({ onClose, onSave }) {
     }
   };
 
-  const handleAddService = async () => {
-    if (!selectedService || !price) {
-      setError('Please select a service and enter a price');
+  const handleAddService = () => {
+    if (!selectedServiceName) {
+      setError('Please select a service');
+      return;
+    }
+
+    // Check if service already exists
+    if (services.some(s => s.name === selectedServiceName)) {
+      setError('This service is already added');
+      return;
+    }
+
+    const newService = {
+      id: `${selectedServiceName.toLowerCase().replace(/\s+/g, '-')}_${Date.now()}`,
+      name: selectedServiceName,
+      variants: []
+    };
+
+    setServices([...services, newService]);
+    setSelectedServiceName('');
+    setSuccess('Service added! Now add variants with pricing.');
+    setTimeout(() => setSuccess(''), 3000);
+  };
+
+  const handleAddVariant = async () => {
+    if (!expandedService || !variantForm.name || !variantForm.price) {
+      setError('Please fill in variant name and price');
       return;
     }
 
@@ -45,31 +77,81 @@ export default function ProfileEditModal({ onClose, onSave }) {
     setLoading(true);
 
     try {
-      const response = await api.post('/professionals/services', {
-        serviceId: `${selectedService}_${Date.now()}`,
-        name: selectedService,
-        durationMinutes: parseInt(duration),
-        price: parseFloat(price)
+      const variant = {
+        id: `${expandedService.id}_${variantForm.name.toLowerCase().replace(/\s+/g, '-')}_${Date.now()}`,
+        name: variantForm.name,
+        price: parseFloat(variantForm.price),
+        duration: parseInt(variantForm.duration),
+        description: variantForm.description,
+        photos: variantForm.photos
+      };
+
+      const updatedServices = services.map(s => {
+        if (s.id === expandedService.id) {
+          return {
+            ...s,
+            variants: [...(s.variants || []), variant]
+          };
+        }
+        return s;
       });
 
-      setServices(response.data.services || []);
-      setSelectedService('');
-      setPrice('');
-      setDuration(60);
-      setSuccess('Service added!');
+      setServices(updatedServices);
+      
+      // Save to backend
+      await api.patch('/professionals/profile', {
+        services: updatedServices
+      });
+
+      resetVariantForm();
+      setExpandedService(updatedServices.find(s => s.id === expandedService.id));
+      setSuccess('Variant added!');
       setTimeout(() => setSuccess(''), 2000);
     } catch (err) {
-      setError(err.response?.data?.error || 'Failed to add service');
+      setError(err.response?.data?.error || 'Failed to add variant');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleRemoveVariant = async (serviceId, variantId) => {
+    if (!window.confirm('Remove this variant?')) return;
+
+    setLoading(true);
+    try {
+      const updatedServices = services.map(s => {
+        if (s.id === serviceId) {
+          return {
+            ...s,
+            variants: s.variants.filter(v => v.id !== variantId)
+          };
+        }
+        return s;
+      });
+
+      setServices(updatedServices);
+      await api.patch('/professionals/profile', { services: updatedServices });
+      
+      setExpandedService(updatedServices.find(s => s.id === serviceId));
+      setSuccess('Variant removed!');
+      setTimeout(() => setSuccess(''), 2000);
+    } catch (err) {
+      setError(err.response?.data?.error || 'Failed to remove variant');
     } finally {
       setLoading(false);
     }
   };
 
   const handleRemoveService = async (serviceId) => {
+    if (!window.confirm('Remove this service and all its variants?')) return;
+
     setLoading(true);
     try {
-      const response = await api.delete(`/professionals/services/${serviceId}`);
-      setServices(response.data.services || []);
+      const updatedServices = services.filter(s => s.id !== serviceId);
+      setServices(updatedServices);
+      await api.patch('/professionals/profile', { services: updatedServices });
+      
+      setExpandedService(null);
       setSuccess('Service removed!');
       setTimeout(() => setSuccess(''), 2000);
     } catch (err) {
@@ -79,8 +161,44 @@ export default function ProfileEditModal({ onClose, onSave }) {
     }
   };
 
-  const handleSave = () => {
-    onSave();
+  const handlePhotoUpload = (e) => {
+    const files = Array.from(e.target.files);
+    const remaining = 3 - variantForm.photos.length;
+
+    if (files.length > remaining) {
+      setError(`You can add max ${remaining} more photo(s) per variant`);
+      return;
+    }
+
+    setError('');
+    files.forEach(file => {
+      const reader = new FileReader();
+      reader.onload = (event) => {
+        setVariantForm(prev => ({
+          ...prev,
+          photos: [...prev.photos, event.target.result]
+        }));
+      };
+      reader.readAsDataURL(file);
+    });
+  };
+
+  const handleRemovePhoto = (index) => {
+    setVariantForm(prev => ({
+      ...prev,
+      photos: prev.photos.filter((_, i) => i !== index)
+    }));
+  };
+
+  const resetVariantForm = () => {
+    setVariantForm({
+      name: '',
+      price: '',
+      duration: 60,
+      description: '',
+      photos: []
+    });
+    setEditingVariant(null);
   };
 
   const usedServices = services.map(s => s.name);
@@ -100,100 +218,201 @@ export default function ProfileEditModal({ onClose, onSave }) {
 
           {/* Services List */}
           <div className="services-section">
-            <h4>Your Services & Pricing</h4>
+            <h4>Services & Pricing</h4>
             
             {services.length === 0 ? (
-              <p className="section-hint">No services added yet. Add your first service below.</p>
+              <p className="section-hint">No services added yet.</p>
             ) : (
               <div className="services-list">
                 {services.map(service => (
-                  <div key={service.id} className="service-item">
-                    <div className="service-info">
-                      <div className="service-name">{service.name}</div>
-                      <div className="service-details">
-                        {service.durationMinutes && <span>${service.price?.toFixed(2) || '0.00'}</span>}
-                        {service.durationMinutes && <span>{service.durationMinutes} min</span>}
+                  <div key={service.id} className="service-card">
+                    <div className="service-header">
+                      <h5>{service.name}</h5>
+                      <div className="service-actions">
+                        <button
+                          className="btn-expand"
+                          onClick={() => setExpandedService(expandedService?.id === service.id ? null : service)}
+                        >
+                          {expandedService?.id === service.id ? '▼' : '▶'} 
+                          {(service.variants || []).length} variant{(service.variants || []).length !== 1 ? 's' : ''}
+                        </button>
+                        <button
+                          className="btn-remove-service"
+                          onClick={() => handleRemoveService(service.id)}
+                          disabled={loading}
+                        >
+                          Delete
+                        </button>
                       </div>
                     </div>
-                    <button
-                      className="btn-remove"
-                      onClick={() => handleRemoveService(service.id)}
-                      disabled={loading}
-                    >
-                      Remove
-                    </button>
+
+                    {expandedService?.id === service.id && (
+                      <div className="service-variants">
+                        {(service.variants || []).length === 0 ? (
+                          <p className="section-hint">No variants yet. Add one below.</p>
+                        ) : (
+                          <div className="variants-list">
+                            {service.variants.map(variant => (
+                              <div key={variant.id} className="variant-item">
+                                <div className="variant-main">
+                                  <div className="variant-name">{variant.name}</div>
+                                  <div className="variant-meta">
+                                    <span className="price">${variant.price?.toFixed(2)}</span>
+                                    <span className="duration">{variant.duration} min</span>
+                                  </div>
+                                  {variant.description && (
+                                    <div className="variant-description">{variant.description}</div>
+                                  )}
+                                  {variant.photos && variant.photos.length > 0 && (
+                                    <div className="variant-photos">
+                                      {variant.photos.map((photo, idx) => (
+                                        <img key={idx} src={photo} alt={`${variant.name} ${idx + 1}`} />
+                                      ))}
+                                    </div>
+                                  )}
+                                </div>
+                                <button
+                                  className="btn-remove-variant"
+                                  onClick={() => handleRemoveVariant(service.id, variant.id)}
+                                  disabled={loading}
+                                >
+                                  Remove
+                                </button>
+                              </div>
+                            ))}
+                          </div>
+                        )}
+
+                        {/* Add Variant Form */}
+                        <div className="add-variant-form">
+                          <h6>Add Variant to {service.name}</h6>
+                          
+                          <div className="form-group">
+                            <label>Variant Name *</label>
+                            <input
+                              type="text"
+                              placeholder="e.g., Swedish Massage, Deep Tissue"
+                              value={variantForm.name}
+                              onChange={(e) => setVariantForm({...variantForm, name: e.target.value})}
+                              disabled={loading}
+                            />
+                          </div>
+
+                          <div className="form-row">
+                            <div className="form-group">
+                              <label>Price ($) *</label>
+                              <input
+                                type="number"
+                                placeholder="0.00"
+                                value={variantForm.price}
+                                onChange={(e) => setVariantForm({...variantForm, price: e.target.value})}
+                                min="0"
+                                step="0.01"
+                                disabled={loading}
+                              />
+                            </div>
+                            <div className="form-group">
+                              <label>Duration (min)</label>
+                              <input
+                                type="number"
+                                value={variantForm.duration}
+                                onChange={(e) => setVariantForm({...variantForm, duration: parseInt(e.target.value)})}
+                                min="15"
+                                max="480"
+                                step="15"
+                                disabled={loading}
+                              />
+                            </div>
+                          </div>
+
+                          <div className="form-group">
+                            <label>Description</label>
+                            <textarea
+                              placeholder="Describe this variant..."
+                              value={variantForm.description}
+                              onChange={(e) => setVariantForm({...variantForm, description: e.target.value})}
+                              rows="2"
+                              disabled={loading}
+                            />
+                          </div>
+
+                          <div className="form-group">
+                            <label>Photos (up to 3)</label>
+                            <input
+                              type="file"
+                              multiple
+                              accept="image/*"
+                              onChange={handlePhotoUpload}
+                              disabled={loading || variantForm.photos.length >= 3}
+                            />
+                            {variantForm.photos.length > 0 && (
+                              <div className="photo-preview">
+                                {variantForm.photos.map((photo, idx) => (
+                                  <div key={idx} className="photo-item">
+                                    <img src={photo} alt={`Preview ${idx + 1}`} />
+                                    <button
+                                      type="button"
+                                      onClick={() => handleRemovePhoto(idx)}
+                                      className="photo-remove"
+                                    >
+                                      ×
+                                    </button>
+                                  </div>
+                                ))}
+                              </div>
+                            )}
+                          </div>
+
+                          <button
+                            className="btn btn-primary btn-add-variant"
+                            onClick={handleAddVariant}
+                            disabled={loading || !variantForm.name || !variantForm.price}
+                          >
+                            {loading ? 'Adding...' : 'Add Variant'}
+                          </button>
+                        </div>
+                      </div>
+                    )}
                   </div>
                 ))}
               </div>
             )}
           </div>
 
-          {/* Add Service Form */}
-          <div className="add-service-section">
-            <h4>Add Service</h4>
-            
-            <div className="form-group">
-              <label>Service Type</label>
-              <select
-                value={selectedService}
-                onChange={(e) => setSelectedService(e.target.value)}
-                disabled={loading}
+          {/* Add New Service */}
+          {availableServices.length > 0 && (
+            <div className="add-service-section">
+              <h4>Add Service</h4>
+              <div className="form-group">
+                <label>Service Type</label>
+                <select
+                  value={selectedServiceName}
+                  onChange={(e) => setSelectedServiceName(e.target.value)}
+                  disabled={loading}
+                >
+                  <option value="">Select a service...</option>
+                  {availableServices.map(svc => (
+                    <option key={svc} value={svc}>{svc}</option>
+                  ))}
+                </select>
+              </div>
+              <button
+                className="btn btn-primary"
+                onClick={handleAddService}
+                disabled={loading || !selectedServiceName}
               >
-                <option value="">Select a service...</option>
-                {availableServices.map(svc => (
-                  <option key={svc} value={svc}>{svc}</option>
-                ))}
-              </select>
+                Add Service
+              </button>
             </div>
-
-            <div className="form-row">
-              <div className="form-group">
-                <label>Duration (minutes)</label>
-                <input
-                  type="number"
-                  value={duration}
-                  onChange={(e) => setDuration(parseInt(e.target.value) || 60)}
-                  min="15"
-                  max="480"
-                  step="15"
-                  disabled={loading}
-                />
-              </div>
-
-              <div className="form-group">
-                <label>Price ($)</label>
-                <input
-                  type="number"
-                  value={price}
-                  onChange={(e) => setPrice(e.target.value)}
-                  placeholder="0.00"
-                  min="0"
-                  step="0.01"
-                  disabled={loading}
-                />
-              </div>
-            </div>
-
-            <button
-              className="btn btn-primary"
-              onClick={handleAddService}
-              disabled={loading || !selectedService || !price}
-            >
-              {loading ? 'Adding...' : 'Add Service'}
-            </button>
-          </div>
+          )}
         </div>
 
         <div className="modal-footer">
           <button className="btn btn-secondary" onClick={onClose}>
-            Cancel
+            Close
           </button>
-          <button
-            className="btn btn-primary"
-            onClick={handleSave}
-            disabled={services.length === 0}
-          >
-            Save Profile
+          <button className="btn btn-primary" disabled={services.length === 0}>
+            Profile Complete
           </button>
         </div>
       </div>
