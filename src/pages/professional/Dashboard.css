@@ -312,7 +312,9 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background: rgba(0, 0, 0, 0.5);
+  background: rgba(8, 15, 30, 0.65);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -320,20 +322,23 @@
 }
 
 .modal-content {
-  background: white;
-  border-radius: 28px;
+  background: rgba(16, 24, 48, 0.85);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-radius: 24px;
   padding: 32px;
   max-width: 500px;
   width: 90%;
-  box-shadow: 0 12px 48px rgba(0, 0, 0, 0.12);
-  border: 1px solid #e5e7eb;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.5);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  color: white;
 }
 
 .modal-content h3 {
   margin: 0 0 20px;
   font-size: 20px;
   font-weight: 700;
-  color: #1f2937;
+  color: #ffffff;
 }
 
 .edit-org-form {
@@ -350,24 +355,28 @@
 
 .form-group label {
   font-weight: 500;
-  font-size: 14px;
-  color: #374151;
+  font-size: 13.5px;
+  color: #d1d5db;
 }
 
 .form-group input,
 .form-group textarea {
-  padding: 10px;
-  border: 1px solid #e5e7eb;
-  border-radius: 6px;
-  font-size: 14px;
+  padding: 12px 14px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 12px;
+  font-size: 13.5px;
   font-family: inherit;
+  background: rgba(255, 255, 255, 0.03);
+  color: #ffffff;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .form-group input:focus,
 .form-group textarea:focus {
   outline: none;
-  border-color: #6366f1;
-  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+  border-color: #38bdf8;
+  background: rgba(255, 255, 255, 0.05);
+  box-shadow: 0 0 15px rgba(56, 189, 248, 0.3);
 }
 
 .modal-buttons {
@@ -378,7 +387,7 @@
 }
 
 .modal-buttons button {
-  padding: 10px 20px;
+  padding: 10px 24px;
 }
 
 /* Responsive */
