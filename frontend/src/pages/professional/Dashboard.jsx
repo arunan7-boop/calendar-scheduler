@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '../../hooks/useAuth';
 import api from '../../utils/api';
+import ProfileEditModal from './ProfileEditModal';
 import './Dashboard.css';
 
 export default function ProfessionalDashboard() {
@@ -18,12 +19,6 @@ export default function ProfessionalDashboard() {
   const [editError, setEditError] = useState('');
   const [editLoading, setEditLoading] = useState(false);
   const [showProfileEditModal, setShowProfileEditModal] = useState(false);
-  const [profileEditData, setProfileEditData] = useState({
-    firstName: '',
-    lastName: '',
-    bio: '',
-    workPhone: ''
-  });
 
   // Load organizations on mount
   useEffect(() => {
@@ -136,16 +131,7 @@ export default function ProfessionalDashboard() {
   };
 
   const handleEditProfileClick = () => {
-    // For MVP, just show a message that this will be implemented
-    // In future, could open a modal or navigate to edit page
     setShowProfileEditModal(true);
-  };
-
-  const handleSaveProfileEdit = async (e) => {
-    e.preventDefault();
-    // Profile editing will be implemented in next phase
-    // For now, just close the modal
-    setShowProfileEditModal(false);
   };
 
   const currentOrg = organizations.find(o => o.id === selectedOrg);
@@ -345,23 +331,10 @@ export default function ProfessionalDashboard() {
 
       {/* Edit Profile Modal */}
       {showProfileEditModal && (
-        <div className="modal-overlay" onClick={() => setShowProfileEditModal(false)}>
-          <div className="modal-content" onClick={(e) => e.stopPropagation()}>
-            <h3>Edit Professional Profile</h3>
-            <p style={{ marginBottom: '20px', color: '#6b7280' }}>
-              Full profile editing coming soon. For now, you can re-run your onboarding wizard from the organization settings.
-            </p>
-            <div className="modal-buttons">
-              <button 
-                type="button" 
-                className="btn btn-primary"
-                onClick={() => setShowProfileEditModal(false)}
-              >
-                Close
-              </button>
-            </div>
-          </div>
-        </div>
+        <ProfileEditModal 
+          onClose={() => setShowProfileEditModal(false)}
+          onSave={() => setShowProfileEditModal(false)}
+        />
       )}
     </div>
   );
