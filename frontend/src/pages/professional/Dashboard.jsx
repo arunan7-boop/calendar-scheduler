@@ -13,6 +13,10 @@ export default function ProfessionalDashboard() {
   const [inviteEmail, setInviteEmail] = useState('');
   const [invitingError, setInvitingError] = useState('');
   const [inviteSuccess, setInviteSuccess] = useState('');
+  const [showEditModal, setShowEditModal] = useState(false);
+  const [editFormData, setEditFormData] = useState({ name: '', description: '' });
+  const [editError, setEditError] = useState('');
+  const [editLoading, setEditLoading] = useState(false);
 
   // Load organizations on mount
   useEffect(() => {
@@ -83,6 +87,47 @@ export default function ProfessionalDashboard() {
     }
   };
 
+  const handleEditOrgClick = () => {
+    if (!currentOrg) return;
+    setEditFormData({
+      name: currentOrg.name || '',
+      description: currentOrg.description || ''
+    });
+    setEditError('');
+    setShowEditModal(true);
+  };
+
+  const handleSaveOrgEdit = async (e) => {
+    e.preventDefault();
+    if (!editFormData.name.trim()) {
+      setEditError('Organization name is required');
+      return;
+    }
+
+    setEditLoading(true);
+    setEditError('');
+
+    try {
+      const response = await api.patch(`/organizations/${selectedOrg}`, {
+        name: editFormData.name,
+        description: editFormData.description
+      });
+
+      // Update local organizations list
+      setOrganizations(prev => prev.map(o => 
+        o.id === selectedOrg 
+          ? { ...o, ...response.data.organization }
+          : o
+      ));
+
+      setShowEditModal(false);
+    } catch (err) {
+      setEditError(err.response?.data?.error || err.message);
+    } finally {
+      setEditLoading(false);
+    }
+  };
+
   const currentOrg = organizations.find(o => o.id === selectedOrg);
 
   if (loading) {
@@ -141,7 +186,7 @@ export default function ProfessionalDashboard() {
                 <h2>{currentOrg.name}</h2>
                 <p>{currentOrg.description || 'No description'}</p>
               </div>
-              <button className="btn btn-secondary">Edit Organization</button>
+              <button className="btn btn-secondary" onClick={handleEditOrgClick}>Edit Organization</button>
             </div>
 
             {/* Tabs */}
@@ -222,6 +267,54 @@ export default function ProfessionalDashboard() {
           </div>
         )}
       </div>
+
+      {/* Edit Organization Modal */}
+      {showEditModal && (
+        <div className="modal-overlay" onClick={() => setShowEditModal(false)}>
+          <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+            <h3>Edit Organization</h3>
+            {editError && <div className="error-message">{editError}</div>}
+            
+            <form onSubmit={handleSaveOrgEdit} className="edit-org-form">
+              <div className="form-group">
+                <label>Organization Name</label>
+                <input
+                  type="text"
+                  value={editFormData.name}
+                  onChange={(e) => setEditFormData(prev => ({ ...prev, name: e.target.value }))}
+                  required
+                />
+              </div>
+
+              <div className="form-group">
+                <label>Description (optional)</label>
+                <textarea
+                  value={editFormData.description}
+                  onChange={(e) => setEditFormData(prev => ({ ...prev, description: e.target.value }))}
+                  rows="3"
+                />
+              </div>
+
+              <div className="modal-buttons">
+                <button 
+                  type="button" 
+                  className="btn btn-secondary"
+                  onClick={() => setShowEditModal(false)}
+                >
+                  Cancel
+                </button>
+                <button 
+                  type="submit" 
+                  className="btn btn-primary"
+                  disabled={editLoading}
+                >
+                  {editLoading ? 'Saving...' : 'Save Changes'}
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

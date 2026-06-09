@@ -183,6 +183,71 @@ router.get('/:org_id', verifyToken, async (req, res) => {
   }
 });
 
+// Update organization
+router.patch('/:org_id', verifyToken, async (req, res) => {
+  try {
+    const { org_id } = req.params;
+    const { name, description, theme_id } = req.body;
+    const user_id = req.user.userId;
+
+    // Verify user is org owner
+    const orgCheck = await pool.query(
+      'SELECT owner_id FROM organizations WHERE id = $1',
+      [org_id]
+    );
+
+    if (orgCheck.rows.length === 0) {
+      return res.status(404).json({ error: 'Organization not found' });
+    }
+
+    if (orgCheck.rows[0].owner_id !== user_id) {
+      return res.status(403).json({ error: 'Only owner can edit organization' });
+    }
+
+    // Update organization
+    const updates = [];
+    const values = [];
+    let paramIdx = 1;
+
+    if (name !== undefined) {
+      updates.push(`name = $${paramIdx++}`);
+      values.push(name);
+    }
+
+    if (description !== undefined) {
+      updates.push(`description = $${paramIdx++}`);
+      values.push(description);
+    }
+
+    if (updates.length === 0) {
+      return res.status(400).json({ error: 'No fields to update' });
+    }
+
+    values.push(org_id);
+    const query = `UPDATE organizations SET ${updates.join(', ')} WHERE id = $${paramIdx} RETURNING *`;
+    const result = await pool.query(query, values);
+
+    // If theme changed, update theme config
+    if (theme_id) {
+      if (!THEMES[theme_id]) {
+        return res.status(400).json({ error: 'Invalid theme' });
+      }
+
+      const theme = THEMES[theme_id];
+      await pool.query(
+        `UPDATE themes SET theme_name = $1, primary_color = $2, secondary_color = $3, accent_color = $4, font_family = $5
+         WHERE organization_id = $6`,
+        [theme.name, theme.primary_color, theme.secondary_color, theme.accent_color, theme.font_family, org_id]
+      );
+    }
+
+    res.json({ organization: result.rows[0], message: 'Organization updated' });
+  } catch (err) {
+    console.error('Organization update error:', err);
+    res.status(500).json({ error: err.message });
+  }
+});
+
 // Generate invite token
 router.post('/:org_id/invite', verifyToken, async (req, res) => {
   try {
