@@ -161,7 +161,25 @@ export default function ProfileEditModal({ onClose, onSave }) {
     }
   };
 
-  const handlePhotoUpload = (e) => {
+  const handleSave = async () => {
+    if (services.length === 0) {
+      setError('Please add at least one service variant');
+      return;
+    }
+
+    setLoading(true);
+    try {
+      await api.patch('/professionals/profile', { services });
+      setSuccess('Profile saved successfully!');
+      setTimeout(() => {
+        onSave();
+      }, 1500);
+    } catch (err) {
+      setError(err.response?.data?.error || 'Failed to save profile');
+    } finally {
+      setLoading(false);
+    }
+  };
     const files = Array.from(e.target.files);
     const remaining = 3 - variantForm.photos.length;
 
@@ -409,10 +427,14 @@ export default function ProfileEditModal({ onClose, onSave }) {
 
         <div className="modal-footer">
           <button className="btn btn-secondary" onClick={onClose}>
-            Close
+            Cancel
           </button>
-          <button className="btn btn-primary" disabled={services.length === 0}>
-            Profile Complete
+          <button 
+            className="btn btn-primary" 
+            onClick={handleSave}
+            disabled={loading || services.length === 0}
+          >
+            {loading ? 'Saving...' : 'Save'}
           </button>
         </div>
       </div>
