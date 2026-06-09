@@ -85,6 +85,18 @@ router.post('/create', verifyToken, async (req, res) => {
     try {
       await client.query('BEGIN');
 
+      // Get professional_id for this user
+      const proResult = await client.query(
+        'SELECT id FROM professional_profiles WHERE user_id = $1',
+        [user_id]
+      );
+
+      if (proResult.rows.length === 0) {
+        throw new Error('Professional profile not found');
+      }
+
+      const professional_id = proResult.rows[0].id;
+
       // Create organization
       const orgResult = await client.query(
         `INSERT INTO organizations (name, owner_id, theme_id) 
@@ -99,6 +111,13 @@ router.post('/create', verifyToken, async (req, res) => {
         `INSERT INTO themes (organization_id, theme_name, primary_color, secondary_color, accent_color, font_family)
          VALUES ($1, $2, $3, $4, $5, $6)`,
         [org_id, theme.name, theme.primary_color, theme.secondary_color, theme.accent_color, theme.font_family]
+      );
+
+      // Add owner as admin member
+      await client.query(
+        `INSERT INTO organization_members (organization_id, professional_id, role)
+         VALUES ($1, $2, $3)`,
+        [org_id, professional_id, 'admin']
       );
 
       await client.query('COMMIT');

@@ -93,7 +93,7 @@ export default function OnboardingWizard() {
       }
 
       await api.post(`/organizations/${organizationId}/onboarding/save`, {
-        professional_id: professional.userId,
+        professional_id: professional.professional_id,
         organization_id: organizationId,
         current_step: step,
         step_data: data,
