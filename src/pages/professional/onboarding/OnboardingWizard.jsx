@@ -219,6 +219,7 @@ function generateThemeCSS(theme) {
       --color-text: ${theme.colors.text};
       --color-text-light: ${theme.colors.textLight};
       --color-border: ${theme.colors.border};
+      --font-family: ${theme.fonts?.family || "'Roboto', sans-serif"};
     }
   `;
 }
