@@ -433,9 +433,63 @@ router.post('/:org_id/onboarding/save', verifyToken, async (req, res) => {
       );
     }
 
+    // Update live profile and organization columns based on current step
+    if (parseInt(current_step) === 1 && step_data) {
+      const { companyName, bio, firstName, lastName, workAddress, workPhone, currency } = step_data;
+      await pool.query(
+        `UPDATE organizations 
+         SET name = COALESCE($1, name), 
+             description = COALESCE($2, description),
+             currency = COALESCE($3, currency)
+         WHERE id = $4`,
+        [companyName, bio, currency, org_id]
+      );
+      await pool.query(
+        `UPDATE professional_profiles
+         SET company_name = COALESCE($1, company_name),
+             first_name = COALESCE($2, first_name),
+             last_name = COALESCE($3, last_name),
+             bio = COALESCE($4, bio),
+             work_address = COALESCE($5, work_address),
+             work_phone = COALESCE($6, work_phone),
+             currency = COALESCE($7, currency)
+         WHERE id = $8`,
+        [companyName, firstName, lastName, bio, workAddress, workPhone, currency, professional_id]
+      );
+    } else if (parseInt(current_step) === 2 && step_data) {
+      const allServices = step_data.all || [];
+      const serviceObjects = allServices.map(name => ({
+        id: `${name.toLowerCase().replace(/\s+/g, '-')}_${Date.now()}`,
+        name: name,
+        variants: []
+      }));
+      await pool.query(
+        `UPDATE professional_profiles
+         SET services = $1::jsonb
+         WHERE id = $2`,
+        [JSON.stringify(serviceObjects), professional_id]
+      );
+    } else if (parseInt(current_step) === 3 && step_data) {
+      await pool.query(
+        `UPDATE professional_profiles
+         SET working_hours = $1::jsonb
+         WHERE id = $2`,
+        [JSON.stringify(step_data), professional_id]
+      );
+    } else if (parseInt(current_step) === 4 && step_data) {
+      const { logo, images } = step_data;
+      await pool.query(
+        `UPDATE organizations
+         SET logo_url = COALESCE($1, logo_url),
+             images = COALESCE($2::jsonb, images)
+         WHERE id = $3`,
+        [logo, JSON.stringify(images), org_id]
+      );
+    }
+
     res.json({
       progress: result.rows[0],
-      message: `Step ${current_step} saved`
+      message: `Step ${current_step} saved and live profiles populated`
     });
   } catch (err) {
     console.error('Onboarding save error:', err);

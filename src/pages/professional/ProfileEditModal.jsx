@@ -1,8 +1,9 @@
+
 import React, { useState, useEffect } from 'react';
 import api from '../../utils/api';
 import './ProfileEditModal.css';
 
-// Build: 2026-06-09 02:48 UTC - Forced rebuild
+// Build: 2026-06-09 20:15 UTC - Redesigned Modal
 
 const SELF_CARE_SERVICES = [
   'Massage Therapy', 'Yoga', 'Meditation', 'Facials', 'Hair Services',
@@ -13,12 +14,22 @@ const SELF_CARE_SERVICES = [
   'Beauty Treatments', 'Wellness Consultation'
 ];
 
+const CURRENCY_SYMBOLS = {
+  USD: '$',
+  EUR: '€',
+  GBP: '£',
+  CAD: '$',
+  AUD: '$',
+  INR: '₹'
+};
+
 export default function ProfileEditModal({ orgId, onClose, onSave }) {
   const [services, setServices] = useState([]);
   const [allowedServices, setAllowedServices] = useState(SELF_CARE_SERVICES);
   const [selectedServiceName, setSelectedServiceName] = useState('');
   const [expandedService, setExpandedService] = useState(null);
   const [editingVariant, setEditingVariant] = useState(null);
+  const [currency, setCurrency] = useState('USD');
   
   const [variantForm, setVariantForm] = useState({
     name: '',
@@ -33,27 +44,39 @@ export default function ProfileEditModal({ orgId, onClose, onSave }) {
   const [success, setSuccess] = useState('');
 
   useEffect(() => {
-    loadServices();
+    loadServicesAndOrg();
   }, []);
 
-  const loadServices = async () => {
+  const loadServicesAndOrg = async () => {
     try {
       const response = await api.get('/professionals/profile');
       const existingServices = response.data.services || [];
       setServices(existingServices);
 
-      if (orgId && response.data.id) {
+      // Attempt to load organization settings for currency
+      if (orgId) {
         try {
-          const progressRes = await api.get(`/organizations/${orgId}/onboarding/${response.data.id}`);
-          if (progressRes.data && progressRes.data.step_2_data) {
-            const step2 = progressRes.data.step_2_data;
-            const checked = step2.all || step2.selected || [];
-            if (checked.length > 0) {
-              setAllowedServices(checked);
-            }
+          const orgRes = await api.get(`/organizations/${orgId}`);
+          if (orgRes.data && orgRes.data.currency) {
+            setCurrency(orgRes.data.currency);
           }
         } catch (err) {
-          console.error('Failed to load onboarding services:', err);
+          console.error('Failed to load organization details:', err);
+        }
+
+        if (response.data.id) {
+          try {
+            const progressRes = await api.get(`/organizations/${orgId}/onboarding/${response.data.id}`);
+            if (progressRes.data && progressRes.data.step_2_data) {
+              const step2 = progressRes.data.step_2_data;
+              const checked = step2.all || step2.selected || [];
+              if (checked.length > 0) {
+                setAllowedServices(checked);
+              }
+            }
+          } catch (err) {
+            console.error('Failed to load onboarding services:', err);
+          }
         }
       }
     } catch (err) {
@@ -241,6 +264,7 @@ export default function ProfileEditModal({ orgId, onClose, onSave }) {
 
   const usedServices = services.map(s => s.name);
   const availableServices = allowedServices.filter(s => !usedServices.includes(s));
+  const currentSymbol = CURRENCY_SYMBOLS[currency] || '$';
 
   return (
     <div className="modal-overlay" onClick={onClose}>
@@ -295,7 +319,7 @@ export default function ProfileEditModal({ orgId, onClose, onSave }) {
                                 <div className="variant-main">
                                   <div className="variant-name">{variant.name}</div>
                                   <div className="variant-meta">
-                                    <span className="price">${variant.price?.toFixed(2)}</span>
+                                    <span className="price">{currentSymbol}{variant.price?.toFixed(2)}</span>
                                     <span className="duration">{variant.duration} min</span>
                                   </div>
                                   {variant.description && (
@@ -324,92 +348,110 @@ export default function ProfileEditModal({ orgId, onClose, onSave }) {
                         )}
 
                         {/* Add Variant Form */}
-                        <div className="add-variant-form">
+                        <div className="add-variant-box">
                           <h6>Add Variant to {service.name}</h6>
                           
-                          <div className="form-group">
-                            <label>Variant Name *</label>
-                            <input
-                              type="text"
-                              placeholder="e.g., Swedish Massage, Deep Tissue"
-                              value={variantForm.name}
-                              onChange={(e) => setVariantForm({...variantForm, name: e.target.value})}
-                              disabled={loading}
-                            />
-                          </div>
-
-                          <div className="form-row">
-                            <div className="form-group">
-                              <label>Price ($) *</label>
-                              <input
-                                type="number"
-                                placeholder="0.00"
-                                value={variantForm.price}
-                                onChange={(e) => setVariantForm({...variantForm, price: e.target.value})}
-                                min="0"
-                                step="0.01"
-                                disabled={loading}
-                              />
-                            </div>
-                            <div className="form-group">
-                              <label>Duration (min)</label>
-                              <input
-                                type="number"
-                                value={variantForm.duration}
-                                onChange={(e) => setVariantForm({...variantForm, duration: parseInt(e.target.value)})}
-                                min="15"
-                                max="480"
-                                step="15"
-                                disabled={loading}
-                              />
-                            </div>
-                          </div>
-
-                          <div className="form-group">
-                            <label>Description</label>
-                            <textarea
-                              placeholder="Describe this variant..."
-                              value={variantForm.description}
-                              onChange={(e) => setVariantForm({...variantForm, description: e.target.value})}
-                              rows="2"
-                              disabled={loading}
-                            />
-                          </div>
-
-                          <div className="form-group">
-                            <label>Photos (up to 3)</label>
-                            <input
-                              type="file"
-                              multiple
-                              accept="image/*"
-                              onChange={handlePhotoUpload}
-                              disabled={loading || variantForm.photos.length >= 3}
-                            />
-                            {variantForm.photos.length > 0 && (
-                              <div className="photo-preview">
-                                {variantForm.photos.map((photo, idx) => (
-                                  <div key={idx} className="photo-item">
-                                    <img src={photo} alt={`Preview ${idx + 1}`} />
-                                    <button
-                                      type="button"
-                                      onClick={() => handleRemovePhoto(idx)}
-                                      className="photo-remove"
-                                    >
-                                      ×
-                                    </button>
-                                  </div>
-                                ))}
+                          <div className="variant-form-layout">
+                            {/* Left Column: Form Inputs */}
+                            <div className="variant-form-fields">
+                              <div className="form-group">
+                                <label>Variant Name *</label>
+                                <input
+                                  type="text"
+                                  placeholder="e.g., Swedish Massage, Deep Tissue"
+                                  value={variantForm.name}
+                                  onChange={(e) => setVariantForm({...variantForm, name: e.target.value})}
+                                  disabled={loading}
+                                />
                               </div>
-                            )}
-                          </div>
 
-                          <button
-                            className="btn btn-primary btn-add-variant"
-                            onClick={handleAddVariant}
-                            disabled={loading || !variantForm.name || !variantForm.price}
-                          >
-                            {loading ? 'Adding...' : 'Add Variant'}
-                          </button>
+                              <div className="form-row">
+                                <div className="form-group">
+                                  <label>Price ({currentSymbol}) *</label>
+                                  <input
+                                    type="number"
+                                    placeholder="0.00"
+                                    value={variantForm.price}
+                                    onChange={(e) => setVariantForm({...variantForm, price: e.target.value})}
+                                    min="0"
+                                    step="0.01"
+                                    disabled={loading}
+                                  />
+                                </div>
+                                <div className="form-group">
+                                  <label>Duration (min)</label>
+                                  <input
+                                    type="number"
+                                    value={variantForm.duration}
+                                    onChange={(e) => setVariantForm({...variantForm, duration: parseInt(e.target.value)})}
+                                    min="15"
+                                    max="480"
+                                    step="15"
+                                    disabled={loading}
+                                  />
+                                </div>
+                              </div>
+
+                              <div className="form-group">
+                                <label>Description</label>
+                                <textarea
+                                  placeholder="Describe this variant..."
+                                  value={variantForm.description}
+                                  onChange={(e) => setVariantForm({...variantForm, description: e.target.value})}
+                                  rows="2"
+                                  disabled={loading}
+                                />
+                              </div>
+
+                              <div className="form-group">
+                                <label>Photos (up to 3)</label>
+                                <input
+                                  type="file"
+                                  multiple
+                                  accept="image/*"
+                                  onChange={handlePhotoUpload}
+                                  disabled={loading || variantForm.photos.length >= 3}
+                                />
+                                {variantForm.photos.length > 0 && (
+                                  <div className="photo-preview">
+                                    {variantForm.photos.map((photo, idx) => (
+                                      <div key={idx} className="photo-item">
+                                        <img src={photo} alt={`Preview ${idx + 1}`} />
+                                        <button
+                                          type="button"
+                                          onClick={() => handleRemovePhoto(idx)}
+                                          className="photo-remove"
+                                        >
+                                          ×
+                                        </button>
+                                      </div>
+                                    ))}
+                                  </div>
+                                )}
+                              </div>
+                            </div>
+
+                            {/* Right Column: Actions side panel (centered vertically) */}
+                            <div className="variant-form-actions">
+                              <button
+                                type="button"
+                                className="btn btn-primary btn-add-variant"
+                                onClick={handleAddVariant}
+                                disabled={loading || !variantForm.name || !variantForm.price}
+                              >
+                                {loading ? 'Adding...' : 'Add Variant'}
+                              </button>
+                              
+                              <button
+                                type="button"
+                                className="btn btn-secondary btn-delete-variant-form"
+                                onClick={resetVariantForm}
+                                disabled={loading}
+                              >
+                                Delete Variant
+                              </button>
+                            </div>
+                          </div>
                         </div>
                       </div>
                     )}

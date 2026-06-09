@@ -26,7 +26,7 @@ router.get('/profile', verifyToken, async (req, res) => {
 // Update professional profile
 router.patch('/profile', verifyToken, async (req, res) => {
   try {
-    const { companyName, firstName, lastName, bio, workAddress, workPhone, workingHours, breakTimes } = req.body;
+    const { companyName, firstName, lastName, bio, workAddress, workPhone, workingHours, breakTimes, services } = req.body;
 
     const result = await pool.query(
       `UPDATE professional_profiles 
@@ -38,10 +38,22 @@ router.patch('/profile', verifyToken, async (req, res) => {
            work_phone = COALESCE($6, work_phone),
            working_hours = COALESCE($7::jsonb, working_hours),
            break_times = COALESCE($8::jsonb, break_times),
+           services = COALESCE($9::jsonb, services),
            updated_at = NOW()
-       WHERE user_id = $9
+       WHERE user_id = $10
        RETURNING *`,
-      [companyName, firstName, lastName, bio, workAddress, workPhone, JSON.stringify(workingHours), JSON.stringify(breakTimes), req.user.userId]
+      [
+        companyName, 
+        firstName, 
+        lastName, 
+        bio, 
+        workAddress, 
+        workPhone, 
+        workingHours ? JSON.stringify(workingHours) : null, 
+        breakTimes ? JSON.stringify(breakTimes) : null, 
+        services ? JSON.stringify(services) : null, 
+        req.user.userId
+      ]
     );
 
     if (result.rows.length === 0) {

@@ -224,84 +224,6 @@
   font-weight: 600;
 }
 
-/* Variant Form Container */
-
-.add-variant-box {
-  background: rgba(255, 255, 255, 0.01);
-  border: 1px dashed rgba(255, 255, 255, 0.1);
-  border-radius: 16px;
-  padding: 16px;
-  margin-top: 15px;
-}
-
-.add-variant-box h6 {
-  margin: 0 0 15px;
-  font-size: 13.5px;
-  font-weight: 600;
-  color: #ffffff;
-}
-
-.variant-form {
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
-}
-
-.form-row {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 12px;
-}
-
-.form-group {
-  display: flex;
-  flex-direction: column;
-}
-
-.form-group label {
-  margin-bottom: 6px;
-  font-weight: 500;
-  font-size: 13px;
-  color: #d1d5db;
-}
-
-.form-group input,
-.form-group textarea,
-.form-group select {
-  padding: 12px 14px;
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  border-radius: 12px;
-  font-size: 13.5px;
-  font-family: inherit;
-  background: rgba(255, 255, 255, 0.03);
-  color: #ffffff;
-  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-  width: 100%;
-}
-
-.form-group select option {
-  background: #0d1527;
-  color: #ffffff;
-}
-
-.form-group input:focus,
-.form-group textarea:focus,
-.form-group select:focus {
-  outline: none;
-  border-color: #38bdf8;
-  background: rgba(255, 255, 255, 0.05);
-  box-shadow: 0 0 15px rgba(56, 189, 248, 0.3);
-}
-
-.btn-add-variant {
-  width: 100%;
-  padding: 12px;
-  border-radius: 12px;
-  font-weight: 600;
-  margin-top: 5px;
-}
-
-/* Photos */
 
 .photo-preview {
   display: flex;
@@ -378,7 +300,6 @@
 }
 
 /* Modal Footer */
-
 .modal-footer {
   display: flex;
   justify-content: flex-end;
@@ -391,3 +312,116 @@
 .modal-footer button {
   padding: 10px 24px;
 }
+
+/* Variant Form Container */
+.add-variant-box {
+  background: rgba(255, 255, 255, 0.01);
+  border: 1px dashed rgba(255, 255, 255, 0.1);
+  border-radius: 16px;
+  padding: 16px;
+  margin-top: 15px;
+}
+
+.add-variant-box h6 {
+  margin: 0 0 15px;
+  font-size: 13.5px;
+  font-weight: 600;
+  color: #ffffff;
+}
+
+.variant-form {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 12px;
+}
+
+.form-group label {
+  margin-bottom: 6px;
+  font-weight: 500;
+  font-size: 13px;
+  color: #d1d5db;
+}
+
+/* Prevent Tailwind white background overrides by using high-specificity selectors */
+.profile-edit-modal .form-group input,
+.profile-edit-modal .form-group textarea,
+.profile-edit-modal .form-group select {
+  padding: 12px 14px;
+  border: 1px solid rgba(255, 255, 255, 0.12) !important;
+  border-radius: 12px !important;
+  font-size: 13.5px !important;
+  font-family: inherit !important;
+  background: rgba(16, 24, 48, 0.95) !important;
+  color: #ffffff !important;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  width: 100% !important;
+}
+
+.profile-edit-modal .form-group select option {
+  background: #0d1527 !important;
+  color: #ffffff !important;
+}
+
+.profile-edit-modal .form-group input:focus,
+.profile-edit-modal .form-group textarea:focus,
+.profile-edit-modal .form-group select:focus {
+  outline: none !important;
+  border-color: #38bdf8 !important;
+  background: rgba(16, 24, 48, 0.98) !important;
+  box-shadow: 0 0 15px rgba(56, 189, 248, 0.4) !important;
+}
+
+/* Side-by-side flex layout for variant form fields and center-right CTAs */
+.variant-form-layout {
+  display: flex;
+  gap: 24px;
+  align-items: center;
+}
+
+.variant-form-fields {
+  flex: 1;
+}
+
+.variant-form-actions {
+  width: 200px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  align-self: center;
+  justify-content: center;
+}
+
+.variant-form-actions button {
+  width: 100%;
+  padding: 12px;
+  border-radius: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.btn-delete-variant-form {
+  background: rgba(239, 68, 68, 0.1) !important;
+  border: 1px solid rgba(239, 68, 68, 0.2) !important;
+  color: #f87171 !important;
+}
+
+.btn-delete-variant-form:hover {
+  background: rgba(239, 68, 68, 0.2) !important;
+  color: #fca5a5 !important;
+}
+
+
+

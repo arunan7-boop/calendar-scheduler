@@ -278,6 +278,18 @@ async function runMigrations() {
     `);
     console.log('✓ themes table');
 
+    // Add currency columns if they don't exist
+    await client.query(`
+      ALTER TABLE professional_profiles ADD COLUMN IF NOT EXISTS currency VARCHAR(10) DEFAULT 'USD'
+    `);
+    await client.query(`
+      ALTER TABLE organizations ADD COLUMN IF NOT EXISTS currency VARCHAR(10) DEFAULT 'USD'
+    `);
+    await client.query(`
+      ALTER TABLE organizations ADD COLUMN IF NOT EXISTS images JSONB DEFAULT '[]'
+    `);
+    console.log('✓ currency and images columns added');
+
     // Create all indexes
     const indexes = [
       'CREATE INDEX IF NOT EXISTS idx_users_email ON users(email)',
