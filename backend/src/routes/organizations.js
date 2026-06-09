@@ -70,7 +70,7 @@ const THEMES = {
 router.post('/create', verifyToken, async (req, res) => {
   try {
     const { organization_name, theme_id = 'default' } = req.body;
-    const user_id = req.user.id;
+    const user_id = req.user.userId; // JWT uses userId, not id
 
     if (!organization_name) {
       return res.status(400).json({ error: 'Organization name required' });
@@ -122,7 +122,7 @@ router.post('/create', verifyToken, async (req, res) => {
 // Get user's organizations
 router.get('/my-organizations', verifyToken, async (req, res) => {
   try {
-    const user_id = req.user.id;
+    const user_id = req.user.userId;
 
     const result = await pool.query(
       `SELECT o.*, t.primary_color, t.secondary_color, t.accent_color, t.font_family
@@ -169,7 +169,7 @@ router.post('/:org_id/invite', verifyToken, async (req, res) => {
   try {
     const { org_id } = req.params;
     const { email } = req.body;
-    const user_id = req.user.id;
+    const user_id = req.user.userId;
 
     // Verify user is org owner/admin
     const orgCheck = await pool.query(
