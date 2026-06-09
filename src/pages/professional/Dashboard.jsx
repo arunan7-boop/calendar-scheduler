@@ -474,11 +474,13 @@ export default function ProfessionalDashboard() {
                   onChange={handleLogoUpload}
                 />
                 {editFormData.logo && (
-                  <div className="logo-preview-list">
+                  <div className="logo-preview-container">
                     <div className="preview-logo-item">
                       <img src={editFormData.logo.data} alt="Logo" />
-                      <button type="button" className="remove-preview-btn" onClick={handleRemoveLogo}>×</button>
                     </div>
+                    <button type="button" className="btn-remove-logo-cta" onClick={handleRemoveLogo}>
+                      Remove Logo
+                    </button>
                   </div>
                 )}
               </div>

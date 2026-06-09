@@ -66,10 +66,11 @@
   color: #ffffff;
 }
 
-.services-list {
+.modal-services-list {
   display: flex;
   flex-direction: column;
   gap: 12px;
+  width: 100%;
 }
 
 .service-card {
@@ -101,38 +102,44 @@
   margin-left: auto;
 }
 
-.btn-expand {
-  padding: 6px 14px;
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+.btn-expand-neon {
+  padding: 8px 16px;
+  background: rgba(16, 24, 48, 0.95);
+  border: 1.5px solid #00f0ff !important;
   border-radius: 12px;
-  color: #e5e7eb;
-  cursor: pointer;
-  font-weight: 600;
-  font-size: 13px;
-  transition: all 0.2s;
-}
-
-.btn-expand:hover {
-  background: rgba(255, 255, 255, 0.1);
   color: #ffffff;
-}
-
-.btn-delete-svc {
-  padding: 6px 14px;
-  background: rgba(239, 68, 68, 0.1);
-  border: 1px solid rgba(239, 68, 68, 0.2);
-  border-radius: 12px;
-  color: #f87171;
   cursor: pointer;
   font-weight: 600;
   font-size: 13px;
   transition: all 0.2s;
+  box-shadow: 0 0 10px rgba(0, 240, 255, 0.3);
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
 }
 
-.btn-delete-svc:hover {
-  background: rgba(239, 68, 68, 0.2);
-  color: #fca5a5;
+.btn-expand-neon:hover {
+  box-shadow: 0 0 15px rgba(0, 240, 255, 0.6);
+  background: rgba(16, 24, 48, 0.8);
+}
+
+.btn-delete-svc-outline {
+  padding: 8px 16px;
+  background: transparent;
+  border: 1.5px solid rgba(255, 255, 255, 0.4) !important;
+  border-radius: 12px;
+  color: #ffffff;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 13px;
+  transition: all 0.2s;
+  display: inline-flex;
+  align-items: center;
+}
+
+.btn-delete-svc-outline:hover {
+  border-color: #ffffff !important;
+  background: rgba(255, 255, 255, 0.05);
 }
 
 .service-content {
@@ -315,10 +322,10 @@
 
 /* Variant Form Container */
 .add-variant-box {
-  background: rgba(255, 255, 255, 0.01);
-  border: 1px dashed rgba(255, 255, 255, 0.1);
-  border-radius: 16px;
-  padding: 16px;
+  background: rgba(16, 24, 48, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 20px;
+  padding: 20px;
   margin-top: 15px;
 }
 
@@ -354,9 +361,21 @@
   color: #d1d5db;
 }
 
-/* Prevent Tailwind white background overrides by using high-specificity selectors */
+/* Prevent Tailwind white background overrides and set neon cyan borders */
 .profile-edit-modal .form-group input,
-.profile-edit-modal .form-group textarea,
+.profile-edit-modal .form-group textarea {
+  padding: 12px 14px;
+  border: 1.5px solid #00f0ff !important;
+  border-radius: 12px !important;
+  font-size: 13.5px !important;
+  font-family: inherit !important;
+  background: rgba(16, 24, 48, 0.95) !important;
+  color: #ffffff !important;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  width: 100% !important;
+  box-shadow: 0 0 10px rgba(0, 240, 255, 0.3) !important;
+}
+
 .profile-edit-modal .form-group select {
   padding: 12px 14px;
   border: 1px solid rgba(255, 255, 255, 0.12) !important;
@@ -375,11 +394,15 @@
 }
 
 .profile-edit-modal .form-group input:focus,
-.profile-edit-modal .form-group textarea:focus,
+.profile-edit-modal .form-group textarea:focus {
+  outline: none !important;
+  border-color: #00f0ff !important;
+  box-shadow: 0 0 15px rgba(0, 240, 255, 0.6) !important;
+}
+
 .profile-edit-modal .form-group select:focus {
   outline: none !important;
   border-color: #38bdf8 !important;
-  background: rgba(16, 24, 48, 0.98) !important;
   box-shadow: 0 0 15px rgba(56, 189, 248, 0.4) !important;
 }
 
@@ -412,15 +435,29 @@
   transition: all 0.2s;
 }
 
+.btn-add-variant {
+  background: #ffffff !important;
+  color: #1e293b !important;
+  border: none !important;
+  font-weight: 700 !important;
+  font-size: 13.5px !important;
+}
+
+.btn-add-variant:hover {
+  background: #f1f5f9 !important;
+}
+
 .btn-delete-variant-form {
-  background: rgba(239, 68, 68, 0.1) !important;
-  border: 1px solid rgba(239, 68, 68, 0.2) !important;
-  color: #f87171 !important;
+  background: transparent !important;
+  border: 1.5px solid rgba(255, 255, 255, 0.4) !important;
+  color: #ffffff !important;
+  font-weight: 600 !important;
+  font-size: 13.5px !important;
 }
 
 .btn-delete-variant-form:hover {
-  background: rgba(239, 68, 68, 0.2) !important;
-  color: #fca5a5 !important;
+  border-color: #ffffff !important;
+  background: rgba(255, 255, 255, 0.05) !important;
 }
 
 

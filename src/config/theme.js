@@ -105,7 +105,7 @@ export const COPY = {
         firstName: 'First Name',
         lastName: 'Last Name',
         companyName: 'Company/Practice Name',
-        bio: 'Professional Bio',
+        bio: 'Company Description',
         workAddress: 'Work Address',
         workPhone: 'Work Phone'
       }
