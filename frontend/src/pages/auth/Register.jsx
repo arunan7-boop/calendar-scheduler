@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import api from '../../utils/api';
+import { storeToken } from '../../utils/tokenStorage';
 
 export default function Register() {
   const [userType, setUserType] = useState('CLIENT');
@@ -22,11 +23,16 @@ export default function Register() {
         lastName
       });
       
-      // Professionals go to org creation, clients go to login
+      // Save JWT token
+      if (response.data.token) {
+        storeToken(response.data.token);
+      }
+      
+      // Professionals go to org creation, clients go to dashboard
       if (userType === 'PROFESSIONAL') {
         navigate('/org/create');
       } else {
-        navigate('/login');
+        navigate('/client');
       }
     } catch (err) {
       setError(err.response?.data?.error || 'Registration failed');

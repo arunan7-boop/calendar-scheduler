@@ -46,7 +46,20 @@ router.post('/register', async (req, res) => {
       );
     }
 
-    res.status(201).json({ userId, message: 'User registered successfully' });
+    // Generate JWT token (auto-login)
+    const token = jwt.sign(
+      { userId, userType, email },
+      JWT_SECRET,
+      { expiresIn: '24h' }
+    );
+
+    res.status(201).json({ 
+      token, 
+      userId, 
+      userType, 
+      email,
+      message: 'User registered successfully' 
+    });
   } catch (err) {
     console.error(err);
     res.status(500).json({ error: 'Registration failed' });
