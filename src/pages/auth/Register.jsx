@@ -40,56 +40,59 @@ export default function Register() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500 p-4">
-      <div className="bg-white rounded-[32px] shadow-xl p-8 md:p-10 w-full max-w-md border border-white/20">
-        <h1 className="text-4xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-purple-600 mb-2 tracking-tight text-center">
+    <div className="min-h-screen flex items-center justify-center p-4" style={{ background: 'radial-gradient(circle at 50% 50%, #111e38 0%, #080f1e 100%)', fontFamily: "'Open Sans', 'Roboto', sans-serif" }}>
+      <div className="rounded-[28px] shadow-2xl p-8 md:p-10 w-full max-w-md border" style={{ background: 'rgba(16, 24, 48, 0.45)', backdropFilter: 'blur(20px)', WebkitBackdropFilter: 'blur(20px)', borderColor: 'rgba(255, 255, 255, 0.08)' }}>
+        <h1 className="text-4xl font-extrabold text-white mb-2 tracking-tight text-center">
           Create Account
         </h1>
-        <p className="text-gray-500 text-center text-sm mb-8 font-medium">
+        <p className="text-gray-400 text-center text-sm mb-8 font-medium">
           Join Calandr appointment network today
         </p>
 
         {error && (
-          <div className="mb-6 p-4 bg-red-50 text-red-700 rounded-2xl border border-red-100 text-sm font-medium">
+          <div className="mb-6 p-4 bg-red-900/20 text-red-400 rounded-2xl border border-red-900/30 text-sm font-medium">
             {error}
           </div>
         )}
 
         <form onSubmit={handleSubmit} className="space-y-5">
           <div className="form-group">
-            <label className="block text-sm font-semibold text-gray-700 mb-1.5 tracking-wide">
+            <label className="block text-sm font-semibold text-gray-300 mb-1.5 tracking-wide">
               I am registering as a...
             </label>
             <select
-              className="input md3-input w-full"
+              className="w-full px-4 py-3 rounded-2xl font-normal text-sm transition-all duration-200 outline-none"
+              style={{ background: 'rgba(255, 255, 255, 0.03)', border: '1px solid rgba(255, 255, 255, 0.12)', color: 'white' }}
               value={userType}
               onChange={(e) => setUserType(e.target.value)}
             >
-              <option value="CLIENT">Client (Looking to Book)</option>
-              <option value="PROFESSIONAL">Professional (Service Provider)</option>
+              <option value="CLIENT" style={{ background: '#0d1527', color: 'white' }}>Client (Looking to Book)</option>
+              <option value="PROFESSIONAL" style={{ background: '#0d1527', color: 'white' }}>Professional (Service Provider)</option>
             </select>
           </div>
 
           <div className="grid grid-cols-2 gap-3">
             <div className="form-group">
-              <label className="block text-sm font-semibold text-gray-700 mb-1.5 tracking-wide">
+              <label className="block text-sm font-semibold text-gray-300 mb-1.5 tracking-wide">
                 First Name
               </label>
               <input
                 type="text"
-                className="input md3-input"
+                className="w-full px-4 py-3 rounded-2xl font-normal text-sm transition-all duration-200 outline-none"
+                style={{ background: 'rgba(255, 255, 255, 0.03)', border: '1px solid rgba(255, 255, 255, 0.12)', color: 'white' }}
                 placeholder="Jane"
                 value={firstName}
                 onChange={(e) => setFirstName(e.target.value)}
               />
             </div>
             <div className="form-group">
-              <label className="block text-sm font-semibold text-gray-700 mb-1.5 tracking-wide">
+              <label className="block text-sm font-semibold text-gray-300 mb-1.5 tracking-wide">
                 Last Name
               </label>
               <input
                 type="text"
-                className="input md3-input"
+                className="w-full px-4 py-3 rounded-2xl font-normal text-sm transition-all duration-200 outline-none"
+                style={{ background: 'rgba(255, 255, 255, 0.03)', border: '1px solid rgba(255, 255, 255, 0.12)', color: 'white' }}
                 placeholder="Doe"
                 value={lastName}
                 onChange={(e) => setLastName(e.target.value)}
@@ -98,12 +101,13 @@ export default function Register() {
           </div>
 
           <div className="form-group">
-            <label className="block text-sm font-semibold text-gray-700 mb-1.5 tracking-wide">
+            <label className="block text-sm font-semibold text-gray-300 mb-1.5 tracking-wide">
               Email Address
             </label>
             <input
               type="email"
-              className="input md3-input"
+              className="w-full px-4 py-3 rounded-2xl font-normal text-sm transition-all duration-200 outline-none"
+              style={{ background: 'rgba(255, 255, 255, 0.03)', border: '1px solid rgba(255, 255, 255, 0.12)', color: 'white' }}
               placeholder="jane.doe@example.com"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
@@ -112,12 +116,13 @@ export default function Register() {
           </div>
 
           <div className="form-group">
-            <label className="block text-sm font-semibold text-gray-700 mb-1.5 tracking-wide">
+            <label className="block text-sm font-semibold text-gray-300 mb-1.5 tracking-wide">
               Password
             </label>
             <input
               type="password"
-              className="input md3-input"
+              className="w-full px-4 py-3 rounded-2xl font-normal text-sm transition-all duration-200 outline-none"
+              style={{ background: 'rgba(255, 255, 255, 0.03)', border: '1px solid rgba(255, 255, 255, 0.12)', color: 'white' }}
               placeholder="Min 6 characters"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
@@ -125,14 +130,14 @@ export default function Register() {
             />
           </div>
 
-          <button type="submit" className="w-full py-3.5 btn btn-primary text-base font-bold shadow-md hover:shadow-lg transition-all duration-200 rounded-full mt-4">
+          <button type="submit" className="w-full py-3.5 text-base font-bold shadow-md hover:shadow-lg transition-all duration-200 rounded-full mt-4 text-white" style={{ background: '#0972d3' }}>
             Create Account
           </button>
         </form>
 
-        <p className="text-center text-sm text-gray-600 mt-8 font-medium">
+        <p className="text-center text-sm text-gray-400 mt-8 font-medium">
           Already have an account?{' '}
-          <Link to="/login" className="text-indigo-600 hover:text-indigo-800 hover:underline font-semibold transition-colors duration-200">
+          <Link to="/login" className="text-blue-400 hover:text-blue-300 font-semibold transition-colors duration-200">
             Sign In
           </Link>
         </p>
