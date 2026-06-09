@@ -1,40 +1,48 @@
+/* Create Organization Styles - Premium Glassmorphism Dark Blue */
+
 .create-org-container {
   min-height: 100vh;
-  background: linear-gradient(135deg, #6366f1 0%, #ec4899 100%);
+  background: radial-gradient(circle at 50% 50%, #111e38 0%, #080f1e 100%);
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 20px;
+  padding: 40px 20px;
+  font-family: 'Open Sans', 'Roboto', -apple-system, sans-serif;
+  color: #ffffff;
 }
 
 .create-org-card {
-  background: white;
+  background: rgba(16, 24, 48, 0.45);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  backdrop-filter: blur(20px) saturate(180%);
   border-radius: 28px;
-  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 24px 80px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.05);
   max-width: 600px;
   width: 100%;
   padding: 40px;
-  border: 1px solid #e5e7eb;
+  border: 1px solid rgba(255, 255, 255, 0.08);
 }
 
 .create-org-card h1 {
   margin: 0 0 10px;
-  font-size: 32px;
-  color: #1f2937;
+  font-size: 28px;
+  color: #ffffff;
   font-weight: 700;
   letter-spacing: -0.025em;
+  text-align: center;
 }
 
 .intro-text {
   margin: 0 0 30px;
-  color: #6b7280;
-  font-size: 16px;
+  color: #9ca3af;
+  font-size: 14.5px;
+  text-align: center;
 }
 
 .create-org-form {
   display: flex;
   flex-direction: column;
-  gap: 25px;
+  gap: 24px;
 }
 
 .form-group {
@@ -43,27 +51,33 @@
 }
 
 .form-group label {
-  margin-bottom: 8px;
+  margin-bottom: 6px;
   font-weight: 600;
-  color: #1f2937;
-  font-size: 14px;
+  color: #d1d5db;
+  font-size: 13.5px;
+  tracking-wide: 0.01em;
 }
 
 .form-group input[type="text"] {
-  padding: 14px 16px;
-  border: 1px solid #e5e7eb;
-  border-radius: 16px;
-  font-size: 14px;
+  padding: 12px 14px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 12px;
+  font-size: 13.5px;
   transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
   font-family: inherit;
-  background: #f9fafb;
+  background: rgba(255, 255, 255, 0.03);
+  color: #ffffff;
+}
+
+.form-group input[type="text"]::placeholder {
+  color: rgba(255, 255, 255, 0.3);
 }
 
 .form-group input[type="text"]:focus {
   outline: none;
-  border-color: #6366f1;
-  background: white;
-  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.15);
+  border-color: #38bdf8;
+  background: rgba(255, 255, 255, 0.05);
+  box-shadow: 0 0 12px rgba(56, 189, 248, 0.25);
 }
 
 .form-group small {
@@ -73,15 +87,15 @@
 }
 
 .theme-description {
-  margin: 0 0 15px;
-  color: #6b7280;
+  margin: 0 0 12px;
+  color: #9ca3af;
   font-size: 13px;
 }
 
 .theme-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
-  gap: 12px;
+  grid-template-columns: repeat(auto-fit, minmax(90px, 1fr));
+  gap: 10px;
 }
 
 .theme-option {
@@ -93,75 +107,95 @@
 }
 
 .theme-preview {
-  padding: 16px;
-  border: 1px solid #e5e7eb;
-  border-radius: 16px;
+  padding: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 8px;
   transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
   text-align: center;
+  background: rgba(255, 255, 255, 0.01);
 }
 
 .theme-option input:checked ~ .theme-preview {
-  border-color: currentColor;
-  background: rgba(99, 102, 241, 0.04);
-  transform: scale(1.05);
-  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.04);
+  border-color: #38bdf8;
+  background: rgba(56, 189, 248, 0.08);
+  transform: scale(1.02);
+  box-shadow: 0 0 15px rgba(56, 189, 248, 0.15);
 }
 
 .theme-color {
-  width: 40px;
-  height: 40px;
-  border-radius: 12px;
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
 }
 
 .theme-preview span {
-  font-size: 12px;
+  font-size: 11px;
   font-weight: 600;
-  color: #1f2937;
+  color: #e5e7eb;
 }
 
 .error-message {
-  background: #fef2f2;
-  color: #991b1b;
-  border: 1px solid #fee2e2;
-  padding: 14px;
-  border-radius: 16px;
-  font-size: 14px;
+  background: rgba(239, 68, 68, 0.1);
+  color: #f87171;
+  border: 1px solid rgba(239, 68, 68, 0.2);
+  padding: 12px;
+  border-radius: 12px;
+  font-size: 13px;
 }
 
-/* Button overrides removed; using global index.css styled buttons */
 .btn-large {
   width: 100%;
-  padding: 16px 28px;
-  font-size: 16px;
+  padding: 12px 28px;
+  font-size: 14.5px;
   font-weight: 700;
-  border-radius: 9999px;
+  border-radius: 10px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  background: #0972d3;
+  color: white;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(9, 114, 211, 0.2);
+}
+
+.btn-large:hover:not(:disabled) {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 16px rgba(9, 114, 211, 0.35);
+  background: #1481e6;
+}
+
+.btn-large:active {
+  transform: translateY(0);
+}
+
+.btn-large:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
 }
 
 .form-hint {
   margin: 0;
   color: #9ca3af;
-  font-size: 13px;
+  font-size: 12.5px;
   text-align: center;
 }
 
 .help-section {
-  margin-top: 40px;
-  padding-top: 30px;
-  border-top: 1px solid #e5e7eb;
+  margin-top: 30px;
+  padding-top: 24px;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
 }
 
 .help-section h3 {
-  margin: 0 0 15px;
-  font-size: 16px;
-  color: #1f2937;
+  margin: 0 0 12px;
+  font-size: 15px;
+  color: #ffffff;
 }
 
 .help-section ul {
@@ -170,12 +204,12 @@
   list-style: none;
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 8px;
 }
 
 .help-section li {
-  font-size: 14px;
-  color: #6b7280;
+  font-size: 13px;
+  color: #9ca3af;
   padding-left: 20px;
   position: relative;
 }
@@ -184,12 +218,12 @@
   content: '✓';
   position: absolute;
   left: 0;
-  color: #10b981;
+  color: #38bdf8;
   font-weight: bold;
 }
 
 .help-section strong {
-  color: #1f2937;
+  color: #ffffff;
 }
 
 @media (max-width: 600px) {
@@ -198,7 +232,7 @@
   }
 
   .create-org-card h1 {
-    font-size: 24px;
+    font-size: 22px;
   }
 
   .theme-grid {

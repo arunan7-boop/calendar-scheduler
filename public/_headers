@@ -1,5 +1,5 @@
-# Prevent index.html from caching (always serve newest layout)
-/index.html
+# Prevent index.html and all pages/routing from caching
+/*
   Cache-Control: no-cache, no-store, must-revalidate
 
 # Cache hashed assets permanently
