@@ -1,12 +1,16 @@
 name = "calendar-scheduler"
+type = "javascript"
+
+[build]
+command = "cd frontend && npm install && npm run build"
+cwd = "."
+watch_paths = ["frontend/src/**/*"]
+
+[build.upload]
+dir = "frontend/dist"
 
 [env.production]
 name = "calandr"
 routes = [
   { pattern = "calandr.pages.dev", zone_name = "pages.dev" }
 ]
-
-[build]
-command = "npm install --prefix frontend && npm run build --prefix frontend"
-cwd = "."
-watch_paths = ["frontend/**/*.jsx", "frontend/**/*.css", "frontend/**/*.js"]
