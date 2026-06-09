@@ -9,7 +9,9 @@ export default function Step1({ data, onSave, onNext, onOrganizationSelect }) {
     companyName: '',
     bio: '',
     workAddress: '',
-    workPhone: ''
+    workPhone: '',
+    currency: 'USD',
+    vatNumber: ''
   });
 
   const [loading, setLoading] = useState(false);
@@ -136,6 +138,41 @@ export default function Step1({ data, onSave, onNext, onOrganizationSelect }) {
             onChange={handleChange}
             placeholder="+1 (555) 123-4567"
           />
+        </div>
+
+        <div className="form-row">
+          <div className="form-group">
+            <label htmlFor="currency">
+              Currency *
+            </label>
+            <select
+              id="currency"
+              name="currency"
+              value={formData.currency}
+              onChange={handleChange}
+              required
+            >
+              <option value="USD">USD ($)</option>
+              <option value="EUR">EUR (€)</option>
+              <option value="GBP">GBP (£)</option>
+              <option value="CAD">CAD ($)</option>
+              <option value="AUD">AUD ($)</option>
+              <option value="INR">INR (₹)</option>
+            </select>
+          </div>
+          <div className="form-group">
+            <label htmlFor="vatNumber">
+              VAT Number (Optional)
+            </label>
+            <input
+              id="vatNumber"
+              type="text"
+              name="vatNumber"
+              value={formData.vatNumber}
+              onChange={handleChange}
+              placeholder="e.g., GB123456789"
+            />
+          </div>
         </div>
 
         {error && <div className="error-message">{error}</div>}

@@ -43,8 +43,9 @@
 .modal-body {
   flex: 1;
   overflow-y: auto;
-  max-height: 85vh;
+  max-height: 100vh;
   margin-bottom: 20px;
+  padding-right: 10px;
 }
 
 .services-section {
@@ -90,7 +91,8 @@
 
 .service-actions {
   display: flex;
-  gap: 8px;
+  gap: 12px;
+  margin-left: auto;
 }
 
 .btn-expand {
@@ -153,6 +155,12 @@
   background: white;
   border: 1px solid #e5e7eb;
   border-radius: 6px;
+  gap: 12px;
+}
+
+.variant-actions {
+  flex-shrink: 0;
+  margin-left: auto;
 }
 
 .variant-main {
@@ -344,6 +352,14 @@
 .btn-add-variant {
   width: 100%;
   margin-top: 8px;
+  margin-bottom: 15px;
+}
+
+.variant-form-actions {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 15px;
 }
 
 .add-service-section {

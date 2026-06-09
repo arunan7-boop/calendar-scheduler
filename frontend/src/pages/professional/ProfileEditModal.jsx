@@ -289,13 +289,15 @@ export default function ProfileEditModal({ onClose, onSave }) {
                                     </div>
                                   )}
                                 </div>
-                                <button
-                                  className="btn-remove-variant"
-                                  onClick={() => handleRemoveVariant(service.id, variant.id)}
-                                  disabled={loading}
-                                >
-                                  Remove
-                                </button>
+                                <div className="variant-actions">
+                                  <button
+                                    className="btn-remove-variant"
+                                    onClick={() => handleRemoveVariant(service.id, variant.id)}
+                                    disabled={loading}
+                                  >
+                                    Remove
+                                  </button>
+                                </div>
                               </div>
                             ))}
                           </div>
