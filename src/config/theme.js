@@ -15,7 +15,7 @@ export const THEMES = {
       border: '#e5e7eb'
     },
     fonts: {
-      family: "'Open Sans', system-ui, -apple-system, sans-serif",
+      family: "'Roboto', system-ui, -apple-system, sans-serif",
       sizes: { xs: '12px', sm: '14px', base: '16px', lg: '18px', xl: '20px', '2xl': '24px' },
       weights: { light: 300, normal: 400, semibold: 600, bold: 700 }
     }
@@ -33,7 +33,7 @@ export const THEMES = {
       border: '#f3f4f6'
     },
     fonts: {
-      family: "'Open Sans', sans-serif",
+      family: "'Roboto', sans-serif",
       sizes: { xs: '12px', sm: '14px', base: '16px', lg: '18px', xl: '20px', '2xl': '24px' },
       weights: { light: 300, normal: 400, semibold: 600, bold: 700 }
     }
@@ -51,7 +51,7 @@ export const THEMES = {
       border: '#ffe0ec'
     },
     fonts: {
-      family: "'Open Sans', sans-serif",
+      family: "'Roboto', sans-serif",
       sizes: { xs: '12px', sm: '14px', base: '16px', lg: '18px', xl: '20px', '2xl': '24px' },
       weights: { light: 300, normal: 400, semibold: 600, bold: 700 }
     }
@@ -69,7 +69,7 @@ export const THEMES = {
       border: '#d1fae5'
     },
     fonts: {
-      family: "'Open Sans', sans-serif",
+      family: "'Roboto', sans-serif",
       sizes: { xs: '12px', sm: '14px', base: '16px', lg: '18px', xl: '20px', '2xl': '24px' },
       weights: { light: 300, normal: 400, semibold: 600, bold: 700 }
     }
@@ -87,7 +87,7 @@ export const THEMES = {
       border: '#e0e0e0'
     },
     fonts: {
-      family: "'Open Sans', serif",
+      family: "'Roboto', serif",
       sizes: { xs: '12px', sm: '14px', base: '16px', lg: '18px', xl: '20px', '2xl': '24px' },
       weights: { light: 300, normal: 400, semibold: 600, bold: 700 }
     }
