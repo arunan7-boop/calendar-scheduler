@@ -1,29 +1,30 @@
 # Dependencies
 node_modules/
-/.pnp
-.pnp.js
+npm-debug.log
+yarn-error.log
+
+# Build output
+dist/
+build/
 
 # Environment
 .env
 .env.local
 .env.*.local
 
-# Build
-/build
-/dist
-*.log
-
 # IDE
 .vscode/
 .idea/
 *.swp
 *.swo
-*~
 
 # OS
 .DS_Store
 Thumbs.db
 
-# Database
-*.db
-*.sqlite
+# Backend specific
+backend/.env
+backend/node_modules/
+
+# Old frontend folder (if exists)
+frontend/
