@@ -17,6 +17,13 @@ export default function ProfessionalDashboard() {
   const [editFormData, setEditFormData] = useState({ name: '', description: '' });
   const [editError, setEditError] = useState('');
   const [editLoading, setEditLoading] = useState(false);
+  const [showProfileEditModal, setShowProfileEditModal] = useState(false);
+  const [profileEditData, setProfileEditData] = useState({
+    firstName: '',
+    lastName: '',
+    bio: '',
+    workPhone: ''
+  });
 
   // Load organizations on mount
   useEffect(() => {
@@ -128,6 +135,19 @@ export default function ProfessionalDashboard() {
     }
   };
 
+  const handleEditProfileClick = () => {
+    // For MVP, just show a message that this will be implemented
+    // In future, could open a modal or navigate to edit page
+    setShowProfileEditModal(true);
+  };
+
+  const handleSaveProfileEdit = async (e) => {
+    e.preventDefault();
+    // Profile editing will be implemented in next phase
+    // For now, just close the modal
+    setShowProfileEditModal(false);
+  };
+
   const currentOrg = organizations.find(o => o.id === selectedOrg);
 
   if (loading) {
@@ -172,7 +192,11 @@ export default function ProfessionalDashboard() {
               </button>
             ))}
           </div>
-          <a href="/org/create" className="btn btn-secondary btn-small">
+          <a 
+            href="/org/create" 
+            className="btn btn-secondary btn-small"
+            style={{ display: organizations.length === 0 ? 'block' : 'none' }}
+          >
             Create Organization
           </a>
         </div>
@@ -250,9 +274,12 @@ export default function ProfessionalDashboard() {
                 <div className="content-section">
                   <h3>Profile</h3>
                   <p>Complete your professional profile, services, and working hours.</p>
-                  <a href="/professional/onboard" className="btn btn-secondary btn-small">
+                  <button 
+                    onClick={handleEditProfileClick}
+                    className="btn btn-secondary btn-small"
+                  >
                     Edit Profile
-                  </a>
+                  </button>
                 </div>
 
                 <div className="content-section">
@@ -312,6 +339,27 @@ export default function ProfessionalDashboard() {
                 </button>
               </div>
             </form>
+          </div>
+        </div>
+      )}
+
+      {/* Edit Profile Modal */}
+      {showProfileEditModal && (
+        <div className="modal-overlay" onClick={() => setShowProfileEditModal(false)}>
+          <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+            <h3>Edit Professional Profile</h3>
+            <p style={{ marginBottom: '20px', color: '#6b7280' }}>
+              Full profile editing coming soon. For now, you can re-run your onboarding wizard from the organization settings.
+            </p>
+            <div className="modal-buttons">
+              <button 
+                type="button" 
+                className="btn btn-primary"
+                onClick={() => setShowProfileEditModal(false)}
+              >
+                Close
+              </button>
+            </div>
           </div>
         </div>
       )}
