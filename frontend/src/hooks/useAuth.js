@@ -1,9 +1,11 @@
 import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { getStoredToken, clearToken } from '../utils/tokenStorage';
 
 export function useAuth() {
   const [user, setUser] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const token = getStoredToken();
@@ -22,6 +24,7 @@ export function useAuth() {
   const logout = () => {
     clearToken();
     setUser(null);
+    navigate('/login');
   };
 
   return { user, isLoading, logout };
