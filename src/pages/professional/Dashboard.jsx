@@ -18,26 +18,18 @@ export default function ProfessionalDashboard() {
   const [organizations, setOrganizations] = useState([]);
   const [selectedOrg, setSelectedOrg] = useState(null);
   const [selectedOrgData, setSelectedOrgData] = useState(null);
-  const [invites, setInvites] = useState([]);
   const [loading, setLoading] = useState(true);
   const [reqLoading, setReqLoading] = useState(false);
   
-  // Sidebar invite states
   const [inviteEmail, setInviteEmail] = useState('');
   const [inviteFirstName, setInviteFirstName] = useState('');
   const [invitingError, setInvitingError] = useState('');
   const [inviteSuccess, setInviteSuccess] = useState('');
   
-  // Edit Org Modal states
   const [showEditModal, setShowEditModal] = useState(false);
-  const [editFormData, setEditFormData] = useState({ name: '', description: '', logo: null, images: [] });
-  const [editError, setEditError] = useState('');
-  const [editLoading, setEditLoading] = useState(false);
-  
   const [showProfileEditModal, setShowProfileEditModal] = useState(false);
   const [proProfile, setProProfile] = useState(null);
 
-  // Load orgs on mount
   useEffect(() => {
     loadOrgsAndProfile();
   }, []);
@@ -66,7 +58,6 @@ export default function ProfessionalDashboard() {
     }
   };
 
-  // API request interceptor
   useEffect(() => {
     const reqInterceptor = api.interceptors.request.use((config) => {
       setReqLoading(true);
@@ -110,14 +101,6 @@ export default function ProfessionalDashboard() {
       setInviteSuccess(`Invite sent to ${inviteFirstName}!`);
       setInviteEmail('');
       setInviteFirstName('');
-
-      setInvites(prev => [...prev, {
-        id: response.data.token,
-        email: inviteEmail,
-        created_at: new Date(),
-        expires_at: response.data.expires_at,
-        status: 'active'
-      }]);
     } catch (err) {
       setInvitingError(err.response?.data?.error || err.message);
     }
@@ -137,7 +120,7 @@ export default function ProfessionalDashboard() {
   }
 
   const currentOrg = selectedOrgData;
-  const currencySymbol = currentOrg?.currency ? CURRENCY_SYMBOLS[currentOrg.currency] : '$';
+  const currencySymbol = currentOrg?.currency ? CURRENCY_SYMBOLS[currentOrg.currency] : '£';
 
   return (
     <div className="dashboard-container">
@@ -207,18 +190,22 @@ export default function ProfessionalDashboard() {
             <div className="services-list">
               {proProfile?.services && proProfile.services.length > 0 ? (
                 proProfile.services.map((service) => (
-                  <div key={service.id} className="service-item">
-                    <span className="service-name">{service.name}</span>
+                  <div key={service.id} className="service-container">
+                    <div className="service-name">{service.name}</div>
+                    
                     {service.variants && service.variants.length > 0 ? (
-                      <div className="variant-prices">
-                        {service.variants.map((v) => (
-                          <span key={v.id} className="variant-price">
-                            {currencySymbol}{parseFloat(v.price || 0).toFixed(2)} / {v.duration_minutes}m
-                          </span>
+                      <div className="variants-container">
+                        {service.variants.map((variant) => (
+                          <div key={variant.id} className="variant-row">
+                            <span className="variant-name">{variant.name}</span>
+                            <span className="variant-price-duration">
+                              {currencySymbol}{parseFloat(variant.price || 0).toFixed(2)} / {variant.duration_minutes}m
+                            </span>
+                          </div>
                         ))}
                       </div>
                     ) : (
-                      <span className="no-variants">No variants</span>
+                      <div className="no-variants">No variants</div>
                     )}
                   </div>
                 ))
