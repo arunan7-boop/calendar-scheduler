@@ -1,4 +1,4 @@
-@import '../../styles/global.css';
+/* Booking Modal Styles */
 
 :root {
   --booking-primary: #d4a574;
@@ -22,6 +22,7 @@
   align-items: center;
   justify-content: center;
   z-index: 1000;
+  font-family: 'Open Sans', -apple-system, BlinkMacSystemFont, sans-serif;
 }
 
 .booking-modal {
@@ -33,6 +34,7 @@
   max-height: 90vh;
   overflow-y: auto;
   box-shadow: 0 4px 24px rgba(0, 0, 0, 0.08);
+  box-sizing: border-box;
 }
 
 .booking-header {
@@ -126,6 +128,7 @@
   height: 24px;
   cursor: pointer;
   flex-shrink: 0;
+  margin: 0;
 }
 
 .variants-chips {
@@ -144,6 +147,7 @@
   cursor: pointer;
   font-family: 'Open Sans', -apple-system, BlinkMacSystemFont, sans-serif;
   transition: all 0.2s ease;
+  border: none;
 }
 
 .service-card.selected .variant-chip {
@@ -175,6 +179,7 @@
   font-family: 'Open Sans', -apple-system, BlinkMacSystemFont, sans-serif;
   color: var(--booking-text);
   background: var(--booking-bg-white);
+  box-sizing: border-box;
 }
 
 .date-inputs input[type="date"]:focus {
@@ -202,6 +207,7 @@
   box-shadow: 0 8px 24px rgba(212, 165, 116, 0.3);
   font-family: 'Open Sans', -apple-system, BlinkMacSystemFont, sans-serif;
   transition: all 0.2s ease;
+  box-sizing: border-box;
 }
 
 .booking-button:hover {
