@@ -3,6 +3,7 @@ import { useAuth } from '../../hooks/useAuth';
 import api from '../../utils/api';
 import ProfileEditModal from './ProfileEditModal';
 import StorefrontCard from './StorefrontCard';
+import BookingModal from './BookingModal';
 import './Dashboard.css';
 
 const CURRENCY_SYMBOLS = {
@@ -28,6 +29,7 @@ export default function ProfessionalDashboard() {
   const [inviteSuccess, setInviteSuccess] = useState('');
   
   const [showProfileEditModal, setShowProfileEditModal] = useState(false);
+  const [showBookingModal, setShowBookingModal] = useState(false);
   const [proProfile, setProProfile] = useState(null);
 
   useEffect(() => {
@@ -222,6 +224,10 @@ export default function ProfessionalDashboard() {
           </div>
         </main>
       </div>
+
+      {showBookingModal && (
+        <BookingModal onClose={() => setShowBookingModal(false)} services={proProfile?.services} />
+      )}
 
       {showProfileEditModal && (
         <ProfileEditModal onClose={() => setShowProfileEditModal(false)} orgId={selectedOrg} onSave={loadOrgsAndProfile} />
