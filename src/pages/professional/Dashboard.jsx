@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useAuth } from '../../hooks/useAuth';
 import api from '../../utils/api';
 import ProfileEditModal from './ProfileEditModal';
+import StorefrontCard from './StorefrontCard';
 import './Dashboard.css';
 
 const CURRENCY_SYMBOLS = {
@@ -230,6 +231,8 @@ export default function ProfessionalDashboard() {
               </div>
             </div>
           </div>
+
+          <StorefrontCard orgId={selectedOrg} proId={proProfile?.id} onStorefrontCreated={() => {}} />
         </main>
       </div>
 
