@@ -149,6 +149,8 @@ export default function ProfessionalDashboard() {
               <button type="submit" className="invite-btn">Send Invite</button>
             </form>
           </div>
+
+          <StorefrontCard orgId={selectedOrg} proId={proProfile?.id} onStorefrontCreated={() => {}} />
         </aside>
 
         <main className="dashboard-main">
@@ -160,49 +162,37 @@ export default function ProfessionalDashboard() {
                 <p>{currentOrg?.description}</p>
               </div>
             </div>
-            <button className="edit-org-btn" onClick={() => {}}>Edit Organization</button>
+            <button className="edit-org-btn" onClick={() => setShowProfileEditModal(true)}>Edit Organization</button>
           </div>
 
           <div className="services-section">
             <h3>Services & Pricing</h3>
-            <div className="services-card">
-              <div className="services-left">
-                {proProfile?.services && proProfile.services.length > 0 ? (
-                  proProfile.services.map((service) => (
-                    <div key={service.id} className="service-item">
-                      <div className="service-name">{service.name}</div>
-                      {service.variants && service.variants.length > 0 ? (
-                        service.variants.map((variant) => (
-                          <div key={variant.id} className="variant-item">{variant.name}</div>
-                        ))
-                      ) : (
-                        <div className="no-variants">No variants</div>
-                      )}
+            <div className="services-list">
+              {proProfile?.services && proProfile.services.length > 0 ? (
+                proProfile.services.map((service) => (
+                  <div key={service.id} className="service-container">
+                    <div className="service-row-header">
+                      <span className="service-name">{service.name}</span>
                     </div>
-                  ))
-                ) : (
-                  <p className="no-services">No services yet</p>
-                )}
-              </div>
-
-              <div className="services-right">
-                {proProfile?.services && proProfile.services.length > 0 ? (
-                  proProfile.services.map((service) => (
-                    <div key={service.id} className="service-prices">
-                      <div className="service-name-placeholder"></div>
-                      {service.variants && service.variants.length > 0 ? (
-                        service.variants.map((variant) => (
-                          <div key={variant.id} className="variant-price">
-                            {currencySymbol}{parseFloat(variant.price || 0).toFixed(2)} / {variant.duration_minutes}m
+                    {service.variants && service.variants.length > 0 ? (
+                      <div className="variants-container">
+                        {service.variants.map((variant) => (
+                          <div key={variant.id} className="variant-row">
+                            <span className="variant-name">{variant.name}</span>
+                            <span className="variant-price-duration">
+                              {currencySymbol}{parseFloat(variant.price || 0).toFixed(2)} / {variant.duration_minutes}m
+                            </span>
                           </div>
-                        ))
-                      ) : (
-                        <div className="no-variants"></div>
-                      )}
-                    </div>
-                  ))
-                ) : null}
-              </div>
+                        ))}
+                      </div>
+                    ) : (
+                      <div className="no-variants">No variants</div>
+                    )}
+                  </div>
+                ))
+              ) : (
+                <p className="no-services">No services yet</p>
+              )}
             </div>
 
             <button className="update-services-btn" onClick={() => setShowProfileEditModal(true)}>
@@ -210,12 +200,10 @@ export default function ProfessionalDashboard() {
             </button>
           </div>
 
-          <StorefrontCard orgId={selectedOrg} proId={proProfile?.id} onStorefrontCreated={() => {}} />
-
           <div className="calendar-gallery-grid">
             <div className="calendar-card">
               <p>View and manage client bookings on the interactive calendar.</p>
-              <button className="calendar-btn" onClick={() => {}}>Interactive Calendar View</button>
+              <button className="calendar-btn">Interactive Calendar View</button>
             </div>
 
             <div className="gallery-card">
