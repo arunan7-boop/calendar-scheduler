@@ -167,26 +167,25 @@ export default function ProfessionalDashboard() {
 
           <div className="services-section">
             <h3>Services & Pricing</h3>
-            <div className="services-list">
+            <div className="services-card">
               {proProfile?.services && proProfile.services.length > 0 ? (
                 proProfile.services.map((service) => (
-                  <div key={service.id} className="service-container">
-                    <div className="service-row-header">
+                  <div key={service.id} className="service-group">
+                    <div className="service-header">
                       <span className="service-name">{service.name}</span>
                     </div>
                     {service.variants && service.variants.length > 0 ? (
-                      <div className="variants-container">
-                        {service.variants.map((variant) => (
-                          <div key={variant.id} className="variant-row">
-                            <span className="variant-name">{variant.name}</span>
-                            <span className="variant-price-duration">
-                              {currencySymbol}{parseFloat(variant.price || 0).toFixed(2)} / {variant.duration_minutes}m
-                            </span>
-                          </div>
-                        ))}
-                      </div>
+                      service.variants.map((variant) => (
+                        <div key={variant.id} className="variant-row">
+                          <span className="variant-name">{variant.name}</span>
+                          <span className="variant-price">{currencySymbol}{parseFloat(variant.price || 0).toFixed(2)} / {variant.duration_minutes}m</span>
+                        </div>
+                      ))
                     ) : (
-                      <div className="no-variants">No variants</div>
+                      <div className="variant-row">
+                        <span className="variant-name">No variants</span>
+                        <span className="variant-price">—</span>
+                      </div>
                     )}
                   </div>
                 ))
