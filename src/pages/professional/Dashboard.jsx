@@ -26,7 +26,6 @@ export default function ProfessionalDashboard() {
   const [invitingError, setInvitingError] = useState('');
   const [inviteSuccess, setInviteSuccess] = useState('');
   
-  const [showEditModal, setShowEditModal] = useState(false);
   const [showProfileEditModal, setShowProfileEditModal] = useState(false);
   const [proProfile, setProProfile] = useState(null);
 
@@ -124,7 +123,6 @@ export default function ProfessionalDashboard() {
 
   return (
     <div className="dashboard-container">
-      {/* Header */}
       <header className="dashboard-header">
         <h1>Dashboard</h1>
         <div className="header-right">
@@ -133,32 +131,18 @@ export default function ProfessionalDashboard() {
         </div>
       </header>
 
-      {/* Main Content */}
       <div className="dashboard-content">
-        {/* LEFT SIDEBAR */}
         <aside className="dashboard-sidebar">
-          {/* Org Card */}
           <div className="sidebar-org-card">
             <h3>{currentOrg?.name}</h3>
             <span className="org-role">Owner</span>
           </div>
 
-          {/* Invite Form */}
           <div className="sidebar-invite-card">
             <h4>Send Invite</h4>
             <form onSubmit={handleGenerateInvite}>
-              <input
-                type="text"
-                placeholder="First Name"
-                value={inviteFirstName}
-                onChange={(e) => setInviteFirstName(e.target.value)}
-              />
-              <input
-                type="email"
-                placeholder="Email Address"
-                value={inviteEmail}
-                onChange={(e) => setInviteEmail(e.target.value)}
-              />
+              <input type="text" placeholder="First Name" value={inviteFirstName} onChange={(e) => setInviteFirstName(e.target.value)} />
+              <input type="email" placeholder="Email Address" value={inviteEmail} onChange={(e) => setInviteEmail(e.target.value)} />
               {invitingError && <p className="error-text">{invitingError}</p>}
               {inviteSuccess && <p className="success-text">{inviteSuccess}</p>}
               <button type="submit" className="invite-btn">Send Invite</button>
@@ -166,59 +150,65 @@ export default function ProfessionalDashboard() {
           </div>
         </aside>
 
-        {/* RIGHT MAIN CONTENT */}
         <main className="dashboard-main">
-          {/* Org Header Card */}
           <div className="org-header-card">
             <div className="org-header-left">
-              {currentOrg?.logo_url && (
-                <img src={currentOrg.logo_url} alt="Org Logo" className="org-logo" />
-              )}
+              {currentOrg?.logo_url && <img src={currentOrg.logo_url} alt="Org Logo" className="org-logo" />}
               <div className="org-info">
                 <h2>{currentOrg?.name}</h2>
                 <p>{currentOrg?.description}</p>
               </div>
             </div>
-            <button className="edit-org-btn" onClick={() => setShowEditModal(true)}>
-              Edit Organization
-            </button>
+            <button className="edit-org-btn">Edit Organization</button>
           </div>
 
-          {/* Services Section */}
           <div className="services-section">
             <h3>Services & Pricing</h3>
-            <div className="services-list">
-              {proProfile?.services && proProfile.services.length > 0 ? (
-                proProfile.services.map((service) => (
-                  <div key={service.id} className="service-container">
-                    <div className="service-name">{service.name}</div>
-                    
-                    {service.variants && service.variants.length > 0 ? (
-                      <div className="variants-container">
-                        {service.variants.map((variant) => (
-                          <div key={variant.id} className="variant-row">
-                            <span className="variant-name">{variant.name}</span>
-                            <span className="variant-price-duration">
-                              {currencySymbol}{parseFloat(variant.price || 0).toFixed(2)} / {variant.duration_minutes}m
-                            </span>
+            <div className="services-card">
+              <div className="services-left">
+                {proProfile?.services && proProfile.services.length > 0 ? (
+                  proProfile.services.map((service) => (
+                    <div key={service.id} className="service-item">
+                      <div className="service-name">{service.name}</div>
+                      {service.variants && service.variants.length > 0 ? (
+                        service.variants.map((variant) => (
+                          <div key={variant.id} className="variant-item">{variant.name}</div>
+                        ))
+                      ) : (
+                        <div className="no-variants">No variants</div>
+                      )}
+                    </div>
+                  ))
+                ) : (
+                  <p className="no-services">No services yet</p>
+                )}
+              </div>
+
+              <div className="services-right">
+                {proProfile?.services && proProfile.services.length > 0 ? (
+                  proProfile.services.map((service) => (
+                    <div key={service.id} className="service-prices">
+                      <div className="service-name-placeholder"></div>
+                      {service.variants && service.variants.length > 0 ? (
+                        service.variants.map((variant) => (
+                          <div key={variant.id} className="variant-price">
+                            {currencySymbol}{parseFloat(variant.price || 0).toFixed(2)} / {variant.duration_minutes}m
                           </div>
-                        ))}
-                      </div>
-                    ) : (
-                      <div className="no-variants">No variants</div>
-                    )}
-                  </div>
-                ))
-              ) : (
-                <p className="no-services">No services yet</p>
-              )}
+                        ))
+                      ) : (
+                        <div className="no-variants"></div>
+                      )}
+                    </div>
+                  ))
+                ) : null}
+              </div>
             </div>
+
             <button className="update-services-btn" onClick={() => setShowProfileEditModal(true)}>
               Update Services
             </button>
           </div>
 
-          {/* Calendar & Gallery */}
           <div className="calendar-gallery-grid">
             <div className="calendar-card">
               <p>View and manage client bookings on the interactive calendar.</p>
@@ -243,13 +233,8 @@ export default function ProfessionalDashboard() {
         </main>
       </div>
 
-      {/* Modals */}
       {showProfileEditModal && (
-        <ProfileEditModal
-          onClose={() => setShowProfileEditModal(false)}
-          orgId={selectedOrg}
-          onSave={loadOrgsAndProfile}
-        />
+        <ProfileEditModal onClose={() => setShowProfileEditModal(false)} orgId={selectedOrg} onSave={loadOrgsAndProfile} />
       )}
     </div>
   );
