@@ -164,7 +164,10 @@ export default function ProfessionalDashboard() {
                 <p>{currentOrg?.description}</p>
               </div>
             </div>
-            <button className="edit-org-btn" onClick={() => setShowProfileEditModal(true)}>Edit Organization</button>
+            <div style="display: flex; gap: 12px;">
+              <button className="edit-org-btn" onClick={() => setShowProfileEditModal(true)}>Edit Organization</button>
+              <button className="edit-org-btn" onClick={() => setShowBookingModal(true)} style="background: #d4a574; color: white; border: none;">Book Appointment</button>
+            </div>
           </div>
 
           <div className="services-section">
