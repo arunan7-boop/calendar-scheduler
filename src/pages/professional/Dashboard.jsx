@@ -160,7 +160,7 @@ export default function ProfessionalDashboard() {
                 <p>{currentOrg?.description}</p>
               </div>
             </div>
-            <button className="edit-org-btn" onClick={() => alert('Edit Organization - Coming Soon')}>Edit Organization</button>
+            <button className="edit-org-btn" onClick={() => {}}>Edit Organization</button>
           </div>
 
           <div className="services-section">
@@ -215,7 +215,7 @@ export default function ProfessionalDashboard() {
           <div className="calendar-gallery-grid">
             <div className="calendar-card">
               <p>View and manage client bookings on the interactive calendar.</p>
-              <button className="calendar-btn" onClick={() => alert('Calendar View - Coming Soon')}>Interactive Calendar View</button>
+              <button className="calendar-btn" onClick={() => {}}>Interactive Calendar View</button>
             </div>
 
             <div className="gallery-card">
