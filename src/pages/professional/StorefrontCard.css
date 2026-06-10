@@ -1,0 +1,174 @@
+/* Storefront Card */
+.storefront-card {
+  background: rgba(16, 24, 48, 0.85);
+  border: 1px solid rgba(0, 240, 255, 0.4);
+  border-radius: 20px;
+  padding: 24px;
+  backdrop-filter: blur(10px);
+  margin-bottom: 20px;
+}
+
+.storefront-card.loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 200px;
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 14px;
+}
+
+/* Empty State */
+.storefront-empty {
+  text-align: center;
+  padding: 20px 0;
+}
+
+.storefront-empty h3 {
+  font-size: 18px;
+  font-weight: 600;
+  color: #ffffff;
+  margin: 0 0 8px;
+}
+
+.storefront-empty p {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.7);
+  margin: 0 0 16px;
+  line-height: 1.6;
+}
+
+/* Existing Storefront */
+.storefront-exists {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.storefront-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.storefront-header h3 {
+  font-size: 18px;
+  font-weight: 600;
+  color: #ffffff;
+  margin: 0;
+}
+
+.status-badge {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 4px 8px;
+  border-radius: 6px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.status-badge.published {
+  background: rgba(0, 255, 136, 0.2);
+  color: #00ff88;
+}
+
+.status-badge.draft {
+  background: rgba(255, 180, 0, 0.2);
+  color: #FFB400;
+}
+
+/* Info Section */
+.storefront-info {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 12px;
+  background: rgba(0, 240, 255, 0.05);
+  border-radius: 8px;
+}
+
+.storefront-info p {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.8);
+  margin: 0;
+}
+
+.storefront-info strong {
+  color: rgba(255, 255, 255, 0.9);
+  margin-right: 8px;
+}
+
+.slug {
+  word-break: break-all;
+}
+
+.slug-value {
+  color: rgba(0, 240, 255, 0.9);
+  font-weight: 600;
+}
+
+/* Actions */
+.storefront-actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+
+@media (min-width: 768px) {
+  .storefront-actions {
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+}
+
+.storefront-btn {
+  padding: 10px 12px;
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-family: 'Open Sans', sans-serif;
+}
+
+.create-btn {
+  width: 100%;
+  background: rgba(0, 240, 255, 0.15);
+  border: 1px solid rgba(0, 240, 255, 0.4);
+  color: #00f0ff;
+}
+
+.create-btn:hover {
+  background: rgba(0, 240, 255, 0.25);
+}
+
+.edit-btn {
+  background: rgba(100, 150, 255, 0.2);
+  border: 1px solid rgba(100, 150, 255, 0.5);
+  color: rgba(150, 180, 255, 1);
+}
+
+.edit-btn:hover {
+  background: rgba(100, 150, 255, 0.3);
+}
+
+.view-btn {
+  background: rgba(0, 240, 255, 0.15);
+  border: 1px solid rgba(0, 240, 255, 0.4);
+  color: #00f0ff;
+}
+
+.view-btn:hover {
+  background: rgba(0, 240, 255, 0.25);
+}
+
+.copy-btn {
+  background: rgba(100, 150, 255, 0.2);
+  border: 1px solid rgba(100, 150, 255, 0.5);
+  color: rgba(150, 180, 255, 1);
+}
+
+.copy-btn:hover {
+  background: rgba(100, 150, 255, 0.3);
+}
