@@ -178,7 +178,7 @@ export default function ProfessionalDashboard() {
                       service.variants.map((variant) => (
                         <div key={variant.id} className="variant-row">
                           <span className="variant-name">{variant.name}</span>
-                          <span className="variant-price">{currencySymbol}{parseFloat(variant.price || 0).toFixed(2)} / {variant.duration_minutes}m</span>
+                          <span className="variant-price">{currencySymbol}{parseFloat(variant.price || 0).toFixed(2)} / {variant.duration_minutes} mins</span>
                         </div>
                       ))
                     ) : (
