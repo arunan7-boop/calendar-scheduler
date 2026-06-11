@@ -1,0 +1,94 @@
+/* ============================================================
+   Solaise.AI — Storefront themes
+   Five curated, ultra-luxury presets a Service Provider can apply
+   to a storefront. Each remaps the semantic surface/text/accent
+   tokens. Apply on a wrapper: <div class="theme-ivory"> … </div>
+   The :root default IS "obsidian".
+   ============================================================ */
+
+/* 1 · OBSIDIAN — signature gold-on-black (same as :root default) */
+.theme-obsidian {
+  --surface-base: var(--obsidian-900);
+  --surface-card: var(--obsidian-800);
+  --surface-raised: var(--obsidian-750);
+  --surface-overlay: var(--obsidian-700);
+  --text-primary: var(--ivory-100);
+  --text-secondary: var(--taupe-300);
+  --text-muted: var(--taupe-400);
+  --text-gold: var(--gold-300);
+  --border-subtle: rgba(244,241,233,0.07);
+  --border-default: rgba(244,241,233,0.12);
+  --accent: var(--gold-400);
+  --accent-hover: var(--gold-300);
+}
+
+/* 2 · IVORY — cream gallery with gold ink (light) */
+.theme-ivory {
+  --surface-base: #F6F3EB;
+  --surface-card: #FFFFFF;
+  --surface-raised: #FBF9F3;
+  --surface-overlay: #FFFFFF;
+  --text-primary: #1C1A14;
+  --text-secondary: #6B6557;
+  --text-muted: #948E7E;
+  --text-inverse: #F4F1E9;
+  --text-gold: #957839;
+  --border-subtle: rgba(28,26,20,0.08);
+  --border-default: rgba(28,26,20,0.14);
+  --border-strong: rgba(149,120,57,0.40);
+  --accent: var(--gold-500);
+  --accent-hover: var(--gold-600);
+  --text-on-gold: #1C1A14;
+}
+
+/* 3 · SAPPHIRE — deep navy salon, gold trim */
+.theme-sapphire {
+  --surface-base: var(--navy-950);
+  --surface-card: var(--navy-900);
+  --surface-raised: var(--navy-800);
+  --surface-overlay: var(--navy-800);
+  --text-primary: #EAF0F7;
+  --text-secondary: #9FB4CB;
+  --text-muted: #6E859E;
+  --text-gold: var(--gold-300);
+  --border-subtle: rgba(234,240,247,0.08);
+  --border-default: rgba(234,240,247,0.14);
+  --accent: var(--gold-400);
+  --accent-hover: var(--gold-300);
+}
+
+/* 4 · NOIR — platinum & charcoal, cool minimal */
+.theme-noir {
+  --surface-base: #0C0C0E;
+  --surface-card: #161619;
+  --surface-raised: #1D1D21;
+  --surface-overlay: #232328;
+  --text-primary: #F2F2F3;
+  --text-secondary: #ADADB2;
+  --text-muted: #76767C;
+  --text-gold: var(--platinum-200);
+  --border-subtle: rgba(242,242,243,0.08);
+  --border-default: rgba(242,242,243,0.14);
+  --accent: var(--platinum-200);
+  --accent-hover: #FFFFFF;
+  --text-on-gold: #0C0C0E;
+}
+
+/* 5 · ROSE CHAMPAGNE — warm blush, soft gold (light) */
+.theme-rose {
+  --surface-base: #F4ECE8;
+  --surface-card: #FCF6F3;
+  --surface-raised: #FBF2EE;
+  --surface-overlay: #FFFFFF;
+  --text-primary: #2A1D1A;
+  --text-secondary: #7A645D;
+  --text-muted: #A18C84;
+  --text-inverse: #F4F1E9;
+  --text-gold: #A87C44;
+  --border-subtle: rgba(42,29,26,0.08);
+  --border-default: rgba(42,29,26,0.13);
+  --border-strong: rgba(168,124,68,0.40);
+  --accent: #C49A6C;
+  --accent-hover: #B0855A;
+  --text-on-gold: #2A1D1A;
+}

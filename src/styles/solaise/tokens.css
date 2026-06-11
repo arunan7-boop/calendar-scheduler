@@ -1,0 +1,225 @@
+/* ============================================================
+   Solaise.AI — Design Tokens (consolidated)
+   Ultra-luxury self-care marketplace. Dark-first.
+   Champagne gold + sapphire navy on obsidian; ivory & platinum.
+   Single source of truth for color, type, spacing & elevation.
+   Generated for production handoff — values are 1:1 with the
+   Solaise.AI design system.
+   ============================================================ */
+
+/* ───────────────────────  COLOR  ─────────────────────── */
+:root {
+  /* ---- Champagne Gold (the signature) ---- */
+  --gold-50:  #FBF4E1;
+  --gold-100: #F3E7C8;
+  --gold-200: #E8D4A6;
+  --gold-300: #D9BE82;
+  --gold-400: #C9A86A;   /* primary gold */
+  --gold-500: #B0904E;
+  --gold-600: #957839;
+  --gold-700: #765E2C;
+  --gold-800: #57451F;
+
+  /* The living gold — used for text, icons, hairlines */
+  --gold-gradient: linear-gradient(135deg, #F3E7C8 0%, #D9BE82 38%, #C9A86A 60%, #A07C44 100%); /* @kind color */
+  --gold-gradient-soft: linear-gradient(135deg, #E8D4A6 0%, #C9A86A 100%); /* @kind color */
+  --gold-sheen: linear-gradient(105deg, rgba(243,231,200,0) 0%, rgba(243,231,200,.55) 48%, rgba(243,231,200,0) 60%); /* @kind color */
+
+  /* ---- Sapphire Navy (the wave) ---- */
+  --navy-950: #0B1B2D;
+  --navy-900: #0E2238;
+  --navy-800: #14304C;
+  --navy-700: #1B3A5C;   /* the brand wave */
+  --navy-600: #234C77;
+  --navy-500: #2E5E8F;
+  --navy-400: #4E7BAA;
+  --navy-300: #7BA0C6;   /* link / accent on dark */
+
+  /* ---- Obsidian (backgrounds) ---- */
+  --obsidian-950: #07090D;
+  --obsidian-900: #0A0E14;   /* app base */
+  --obsidian-850: #0E131B;
+  --obsidian-800: #141A24;   /* card */
+  --obsidian-750: #18202B;
+  --obsidian-700: #1E2733;   /* raised / overlay */
+  --obsidian-600: #2A3543;   /* hairline on dark */
+  --obsidian-500: #3A4856;
+
+  /* ---- Ivory / Cream (light surfaces, text on dark) ---- */
+  --ivory-50:  #FBFAF5;
+  --ivory-100: #F4F1E9;   /* primary text on dark / cream surface */
+  --ivory-200: #EAE5D7;
+  --ivory-300: #DAD3C0;
+  --ivory-400: #C2BAA3;
+
+  /* ---- Platinum / Silver (shield, secondary metal) ---- */
+  --platinum-100: #EEF0F2;
+  --platinum-200: #DDE0E4;
+  --platinum-400: #B4B9C0;
+  --platinum-600: #888E96;
+
+  /* ---- Warm taupe neutrals (muted text, dividers) ---- */
+  --taupe-300: #B6B0A1;
+  --taupe-400: #948E7E;
+  --taupe-500: #6E695C;
+  --taupe-600: #4C4840;
+
+  /* ---- Muted luxury status hues ---- */
+  --success: #6E9168;     /* sage */
+  --success-soft: #1A2A1E;
+  --warning: #CFA24A;     /* antique amber */
+  --warning-soft: #2C2410;
+  --danger:  #B05058;     /* garnet */
+  --danger-soft: #2A1518;
+  --info:    #5E84B2;     /* powder sapphire */
+  --info-soft: #111E2C;
+
+  /* =========================================================
+     Semantic aliases — default DARK (obsidian) theme
+     ========================================================= */
+  --surface-base:     var(--obsidian-900);
+  --surface-sunken:   var(--obsidian-950);
+  --surface-card:     var(--obsidian-800);
+  --surface-raised:   var(--obsidian-750);
+  --surface-overlay:  var(--obsidian-700);
+  --surface-inverse:  var(--ivory-100);
+  --surface-gold:     var(--gold-400);
+
+  --text-primary:   var(--ivory-100);
+  --text-secondary: var(--taupe-300);
+  --text-muted:     var(--taupe-400);
+  --text-inverse:   var(--obsidian-900);
+  --text-on-gold:   var(--obsidian-950);
+  --text-gold:      var(--gold-300);
+  --text-link:      var(--navy-300);
+
+  --border-subtle:  rgba(244, 241, 233, 0.07);
+  --border-default: rgba(244, 241, 233, 0.12);
+  --border-strong:  rgba(201, 168, 106, 0.32);
+  --border-gold:    rgba(201, 168, 106, 0.55);
+
+  --accent:         var(--gold-400);
+  --accent-hover:   var(--gold-300);
+  --accent-press:   var(--gold-500);
+  --accent-navy:    var(--navy-600);
+
+  --focus-ring:     rgba(201, 168, 106, 0.55);
+  --scrim:          rgba(7, 9, 13, 0.72);
+}
+
+
+/* ─────────────────────  TYPOGRAPHY  ───────────────────── */
+:root {
+  --font-display: "Cinzel", "Times New Roman", serif;
+  --font-serif:   "Cormorant Garamond", Georgia, serif;
+  --font-sans:    "Jost", "Helvetica Neue", Arial, sans-serif;
+  --font-body:    var(--font-sans);
+
+  /* Type scale (rem, 16px root) — fluid-ready */
+  --text-2xs: 0.6875rem;  /* 11px — micro labels */
+  --text-xs:  0.75rem;    /* 12px */
+  --text-sm:  0.8125rem;  /* 13px */
+  --text-base:0.9375rem;  /* 15px — UI body */
+  --text-md:  1.0625rem;  /* 17px */
+  --text-lg:  1.25rem;    /* 20px */
+  --text-xl:  1.5rem;     /* 24px */
+  --text-2xl: 2rem;       /* 32px */
+  --text-3xl: 2.75rem;    /* 44px */
+  --text-4xl: 3.75rem;    /* 60px */
+  --text-5xl: 5rem;       /* 80px */
+
+  --weight-light: 300;
+  --weight-regular: 400;
+  --weight-medium: 500;
+  --weight-semibold: 600;
+  --weight-bold: 700;
+
+  --leading-tight: 1.08;
+  --leading-snug: 1.25;
+  --leading-normal: 1.5;
+  --leading-relaxed: 1.7;
+
+  /* Tracking — Cinzel & all-caps labels want air */
+  --tracking-tightest: -0.02em;
+  --tracking-tight: -0.01em;
+  --tracking-normal: 0;
+  --tracking-wide: 0.08em;
+  --tracking-wider: 0.16em;
+  --tracking-widest: 0.32em;   /* hero eyebrow / logo subline */
+}
+
+
+/* ──────────────────  SPACING · RADII · SIZE  ──────────── */
+:root {
+  --space-0: 0;
+  --space-1: 0.25rem;   /* 4 */
+  --space-2: 0.5rem;    /* 8 */
+  --space-3: 0.75rem;   /* 12 */
+  --space-4: 1rem;      /* 16 */
+  --space-5: 1.5rem;    /* 24 */
+  --space-6: 2rem;      /* 32 */
+  --space-7: 2.5rem;    /* 40 */
+  --space-8: 3rem;      /* 48 */
+  --space-9: 4rem;      /* 64 */
+  --space-10: 5.5rem;   /* 88 */
+  --space-11: 7rem;     /* 112 */
+
+  /* Corner radii — restrained & architectural */
+  --radius-xs: 3px;
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 16px;
+  --radius-xl: 24px;
+  --radius-2xl: 32px;
+  --radius-pill: 999px;
+  --radius-circle: 50%;
+
+  /* Control heights */
+  --control-sm: 36px;
+  --control-md: 44px;   /* default — meets touch target */
+  --control-lg: 56px;
+
+  /* Layout */
+  --container-max: 1280px;
+  --container-wide: 1440px;
+  --gutter: var(--space-6);
+  --hairline: 1px;
+}
+
+
+/* ───────────────  ELEVATION · MOTION · GLASS  ─────────── */
+:root {
+  /* Ambient shadows on dark surfaces */
+  --shadow-xs: 0 1px 2px rgba(0,0,0,0.40);
+  --shadow-sm: 0 2px 8px rgba(0,0,0,0.45);
+  --shadow-md: 0 8px 24px rgba(0,0,0,0.50);
+  --shadow-lg: 0 20px 48px rgba(0,0,0,0.55);
+  --shadow-xl: 0 32px 80px rgba(0,0,0,0.62);
+
+  /* Card rim — the faint hairline that gives obsidian cards form */
+  --rim-soft: inset 0 0 0 1px rgba(244,241,233,0.06); /* @kind shadow */
+  --rim-gold: inset 0 0 0 1px rgba(201,168,106,0.28); /* @kind shadow */
+
+  /* Gold glow — reserve for primary CTAs / active states */
+  --glow-gold-sm: 0 0 0 1px rgba(201,168,106,0.30), 0 4px 18px rgba(201,168,106,0.16);
+  --glow-gold-md: 0 0 0 1px rgba(201,168,106,0.42), 0 8px 32px rgba(201,168,106,0.22);
+
+  /* Elevated card: ambient shadow + soft rim together */
+  --elevation-card: var(--shadow-md), var(--rim-soft);
+  --elevation-pop:  var(--shadow-lg), var(--rim-soft);
+
+  /* Glass / blur */
+  --blur-sm: blur(8px);  /* @kind other */
+  --blur-md: blur(18px); /* @kind other */
+  --blur-lg: blur(32px); /* @kind other */
+  --glass-dark: rgba(14, 19, 27, 0.66);
+  --glass-gold: rgba(201, 168, 106, 0.08);
+
+  /* Motion */
+  --ease-lux: cubic-bezier(0.22, 1, 0.36, 1); /* @kind other */
+  --ease-soft: cubic-bezier(0.4, 0, 0.2, 1); /* @kind other */
+  --dur-fast: 140ms; /* @kind other */
+  --dur-mid: 260ms;  /* @kind other */
+  --dur-slow: 520ms; /* @kind other */
+}
+

@@ -1,0 +1,74 @@
+/* ============================================================
+   Solaise.AI — Base reset + brand primitives
+   Minimal, opinionated. Sets the obsidian canvas, refined text
+   rendering, gold selection, and a few brand utility classes used
+   across cards, kits and guidelines.
+   ============================================================ */
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  font-family: var(--font-sans);
+  font-size: var(--text-base);
+  font-weight: var(--weight-regular);
+  line-height: var(--leading-normal);
+  color: var(--text-primary);
+  background-color: var(--surface-base);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+::selection { background: rgba(201,168,106,0.30); color: var(--ivory-50); }
+
+h1,h2,h3,h4,h5,h6 { margin: 0; font-weight: var(--weight-regular); }
+p { margin: 0; }
+a { color: var(--text-link); text-decoration: none; }
+button { font-family: inherit; }
+
+/* ---- Brand utility helpers ---- */
+
+/* Gold metallic text (use on dark) */
+.u-gold-text {
+  background: var(--gold-gradient);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* Cinzel display lockup */
+.u-display {
+  font-family: var(--font-display);
+  font-weight: var(--weight-semibold);
+  letter-spacing: var(--tracking-wide);
+  line-height: var(--leading-tight);
+}
+
+/* Spaced capital eyebrow / micro-label */
+.u-eyebrow {
+  font-family: var(--font-sans);
+  font-size: var(--text-2xs);
+  font-weight: var(--weight-500, 500);
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-widest);
+  color: var(--text-gold);
+}
+
+/* Hairline gold divider with center diamond */
+.u-rule {
+  display: flex; align-items: center; gap: var(--space-3);
+  color: var(--gold-400);
+}
+.u-rule::before, .u-rule::after {
+  content: ""; height: 1px; flex: 1;
+  background: linear-gradient(90deg, transparent, rgba(201,168,106,0.5), transparent);
+}
+
+/* Obsidian card surface with rim */
+.u-card {
+  background: var(--surface-card);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-md), var(--rim-soft);
+}

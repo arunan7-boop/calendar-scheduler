@@ -1,0 +1,42 @@
+/* ============================================================
+   Solaise.AI — Global CSS Entry
+   Loads the full design system, then Tailwind layers
+   ============================================================ */
+
+/* 1. Fonts — Cinzel (self-hosted) + Cormorant Garamond + Jost (Google) */
+@import './styles/solaise/fonts.css';
+
+/* 2. Design tokens — all CSS variables */
+@import './styles/solaise/tokens.css';
+
+/* 3. Storefront themes (.theme-ivory, .theme-sapphire, etc.) */
+@import './styles/solaise/themes.css';
+
+/* 4. Reset + brand utility classes (.u-gold-text, .u-display, .u-card, etc.) */
+@import './styles/solaise/base.css';
+
+/* 5. Tailwind */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ============================================================
+   Global overrides & app shell
+   ============================================================ */
+
+html, body, #root {
+  height: 100%;
+  min-height: 100vh;
+}
+
+/* Smooth scrollbar on obsidian */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: var(--obsidian-900); }
+::-webkit-scrollbar-thumb { background: var(--obsidian-600); border-radius: var(--radius-pill); }
+::-webkit-scrollbar-thumb:hover { background: var(--gold-700); }
+
+/* Gold focus ring globally */
+*:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 2px;
+}
